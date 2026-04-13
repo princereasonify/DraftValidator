@@ -29,7 +29,6 @@ export default function SelectionPage({ user, onOpen, onLogout }) {
   const [loadingSchools, setLoadingSchools] = useState(true);
   const [loadingSubjects, setLoadingSubjects] = useState(false);
   const [loadingChapters, setLoadingChapters] = useState(false);
-  const [opening, setOpening] = useState(false);
   const [error, setError] = useState('');
 
   /* ── Step 1: load schools ─────────────────────────── */
@@ -105,18 +104,21 @@ export default function SelectionPage({ user, onOpen, onLogout }) {
   const handleOpen = useCallback(() => {
     const chapter = chapters.find(c => String(c.id) === String(chapterId));
     if (!chapter) return;
-    setOpening(true);
+    const pdfUrl = chapter.textbookUrl || chapter.pdfUrl || chapter.TextbookUrl || chapter.PdfUrl || '';
     onOpen({
-      planData: chapter.planJson ?? null,
+      planData: null,
       meta: {
         subject,
         grade: standard,
         chapter: chapter.name,
+        chapterId: chapter.id,
+        schoolId: schoolId || null,
         board,
         medium,
+        pdfUrl,
       },
     });
-  }, [chapters, chapterId, subject, standard, board, medium, onOpen]);
+  }, [chapters, chapterId, schoolId, subject, standard, board, medium, onOpen]);
 
   const initials = user?.firstName
     ? (user.firstName[0] + (user.lastName?.[0] || '')).toUpperCase()
@@ -287,16 +289,11 @@ export default function SelectionPage({ user, onOpen, onLogout }) {
 
           <button
             className="sel-open-btn"
-            disabled={!chapterId || opening}
+            disabled={!chapterId}
             onClick={handleOpen}
           >
-            {opening
-              ? <><span className="login-spinner" />Opening…</>
-              : <>
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  Open Draft Validator
-                </>
-            }
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Open Draft Validator
           </button>
         </div>
       </div>

@@ -880,7 +880,7 @@ function useUndoReducer(initialState) {
 
 /* ── Main DraftPlanView ──────────────────────────────── */
 export default function DraftPlanView({ initialData }) {
-  const seed = initialData ? resequenceAll(initialData) : { ...rawData, _versions: [] };
+  const seed = initialData ? { ...resequenceAll(initialData).newData, _versions: [] } : { ...rawData, _versions: [] };
   const [data, dispatch, { undo, redo, canUndo, canRedo }] = useUndoReducer(seed);
   const [splitModal, setSplitModal] = useState(null);
   const [mergeModal, setMergeModal] = useState(null);

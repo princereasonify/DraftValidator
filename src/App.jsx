@@ -3,6 +3,7 @@ import PdfViewer from './components/PdfViewer';
 import DraftPlanView from './components/DraftPlanView';
 import LoginPage from './pages/LoginPage';
 import SelectionPage from './pages/SelectionPage';
+import { getTextbookPdfUrl, getAuthToken, getLearningPlanChapter, getDraftedLearningPlanChapter } from './api';
 import './App.css';
 
 const MIN_PCT = 20;
@@ -46,9 +47,50 @@ export default function App() {
     }
   }, []);
 
-  const handleOpen = useCallback(({ planData: pd, meta }) => {
-    setPlanData(pd);
+  const [loadingPlan, setLoadingPlan] = useState(false);
+
+  const handleOpen = useCallback(async ({ planData: pd, meta }) => {
     setPlanMeta(meta);
+
+    if (pd) {
+      setPlanData(pd);
+      setView('main');
+      return;
+    }
+
+    // Fetch drafted plan first, fallback to learning plan
+    if (meta?.chapterId) {
+      setLoadingPlan(true);
+      try {
+        const opts = meta.schoolId ? { schoolId: meta.schoolId } : {};
+
+        // Try drafted plan first
+        const drafted = await getDraftedLearningPlanChapter(meta.chapterId, opts);
+        if (drafted?.plan?.draftedPlanJson) {
+          const raw = drafted.plan.draftedPlanJson;
+          const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+          setPlanData(parsed);
+          setView('main');
+          return;
+        }
+
+        // Fallback to learning plan
+        const lp = await getLearningPlanChapter(meta.chapterId, opts);
+        if (lp?.plan?.planJson) {
+          const parsed = typeof lp.plan.planJson === 'string' ? JSON.parse(lp.plan.planJson) : lp.plan.planJson;
+          setPlanData(parsed);
+        } else {
+          setPlanData(null);
+        }
+      } catch {
+        setPlanData(null);
+      } finally {
+        setLoadingPlan(false);
+      }
+    } else {
+      setPlanData(null);
+    }
+
     setView('main');
   }, []);
 
@@ -171,7 +213,10 @@ export default function App() {
       >
         {/* PDF Panel */}
         <div className="app-panel app-panel--pdf" style={{ width: `${splitPct}%` }}>
-          <PdfViewer src="/textbook.pdf" />
+          <PdfViewer
+            src={planMeta?.pdfUrl ? getTextbookPdfUrl(planMeta.pdfUrl) : '/textbook.pdf'}
+            authToken={getAuthToken()}
+          />
         </div>
 
         {/* Resizer */}
