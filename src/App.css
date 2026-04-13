@@ -1,0 +1,192 @@
+/* ── App Shell ────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ── Header ───────────────────────────────────────── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  background: var(--clr-header-bg);
+  color: var(--clr-header-text);
+  flex-shrink: 0;
+  z-index: 100;
+  box-shadow: 0 1px 0 rgba(255,255,255,.06);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-header__logo {
+  display: flex;
+  align-items: center;
+  color: #A78BFA;
+}
+
+.app-header__title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -.3px;
+  color: #EDE9FE;
+}
+
+.app-header__divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255,255,255,.15);
+}
+
+.app-header__sub {
+  font-size: .75rem;
+  color: #A78BFA;
+  font-weight: 500;
+  letter-spacing: .2px;
+}
+
+.app-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-header__badge {
+  font-size: .7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+
+.app-header__badge--draft {
+  background: rgba(167,139,250,.2);
+  color: #C4B5FD;
+  border: 1px solid rgba(167,139,250,.3);
+}
+
+.app-header__badge--stage {
+  background: rgba(6,182,212,.15);
+  color: #67E8F9;
+  border: 1px solid rgba(6,182,212,.25);
+}
+
+.app-header__back-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 6px;
+  color: #C4B5FD;
+  font-size: .75rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.app-header__back-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
+.app-header__back-btn--logout { padding: 4px 8px; }
+
+/* ── Panel Labels ─────────────────────────────────── */
+.app-panel-labels {
+  display: flex;
+  height: 32px;
+  flex-shrink: 0;
+  background: var(--clr-surface);
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.app-panel-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  border-right: 1px solid var(--clr-border);
+  flex-shrink: 0;
+  transition: background var(--dur) var(--ease);
+}
+
+.app-panel-label svg { color: var(--clr-primary); opacity: .7; }
+
+/* ── Main ─────────────────────────────────────────── */
+.app-main {
+  display: flex;
+  /* concrete pixel height so every child flex column can resolve flex:1 */
+  height: calc(100dvh - 52px - 32px);
+  overflow: hidden;
+}
+
+.app-main--resizing * { pointer-events: none; }
+
+/* ── Panels ───────────────────────────────────────── */
+.app-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.app-panel--pdf { background: #525659; }
+.app-panel--plan {
+  background: var(--clr-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.app-panel--plan::-webkit-scrollbar { width: 5px; }
+.app-panel--plan::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 99px; }
+
+/* ── Resizer ──────────────────────────────────────── */
+.app-resizer {
+  width: 8px;
+  flex-shrink: 0;
+  background: var(--clr-border);
+  cursor: col-resize;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  position: relative;
+  transition: background var(--dur) var(--ease);
+  z-index: 10;
+}
+
+.app-resizer:hover,
+.app-resizer--active {
+  background: var(--clr-primary);
+}
+
+.app-resizer__dots {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+}
+
+.app-resizer__dots span {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.5);
+  display: block;
+}
+
+.app-resizer:hover .app-resizer__dots span,
+.app-resizer--active .app-resizer__dots span {
+  background: rgba(255,255,255,.9);
+}

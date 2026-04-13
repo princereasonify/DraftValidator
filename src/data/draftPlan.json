@@ -1,0 +1,1043 @@
+{
+  "plan_id": "sci7_ch1_draft_v1",
+  "draft_version": 1,
+  "pipeline_stage": "draft",
+  "chapter_id": "sci7_ch1",
+  "chapter_name": "The Ever-Evolving World of Science",
+  "subject": "science",
+  "grade": 7,
+  "level": "standard",
+  "textbook": "Curiosity | Textbook of Science | Grade 7",
+  "unit_number": 1,
+  "unit_title": "The Ever-Evolving World of Science",
+  "textbook_url": "",
+  "generated_at": "2026-04-11",
+  "example_plan": [
+    {
+      "example_id": "EX1",
+      "example_theme": "Paper Plane and the Science of Flight",
+      "example_description": "Students fold and fly a paper plane in the school corridor. They observe how it stays in the air, curves, or nose-dives. This mirrors how early inventors studied bird wings before designing real aircraft — showing that science begins with a simple observation and a curious mind.",
+      "scope_level": "chapter",
+      "supported_topic_ids": [
+        "M1.S1.T1",
+        "M1.S1.T2",
+        "M3.S7.T15",
+        "M3.S8.T16"
+      ]
+    },
+    {
+      "example_id": "EX2",
+      "example_theme": "Haldi Stain on a School Uniform",
+      "example_description": "A student gets a haldi (turmeric) stain on their white uniform while helping in the kitchen. Washing with soap doesn't fully remove it, but a little lemon juice helps. This everyday puzzle — 'Why does haldi stain, and why does lemon help?' — is exactly the kind of question that kicks off a scientific investigation into material properties and chemical reactions.",
+      "scope_level": "module",
+      "supported_topic_ids": [
+        "M2.S3.T5",
+        "M2.S3.T6",
+        "M1.S1.T1"
+      ]
+    },
+    {
+      "example_id": "EX3",
+      "example_theme": "Torch Battery Running Out",
+      "example_description": "During a power cut, a student uses a torch. The light slowly dims and eventually goes out. Unlike melting chocolate that can re-solidify, the battery cannot be 'reused' by simply cooling it. This contrast between a melted ice cube (reversible) and a dead battery (irreversible) makes the concept of reversible vs irreversible changes concrete and relatable.",
+      "scope_level": "module",
+      "supported_topic_ids": [
+        "M2.S4.T7",
+        "M2.S4.T8"
+      ]
+    },
+    {
+      "example_id": "EX4",
+      "example_theme": "Monsoon Water Cycle — From Sea to Rain to Ground",
+      "example_description": "During the monsoon season, students observe puddles forming and later disappearing under the hot sun. Where does the water go? It evaporates, rises, forms clouds, and falls as rain — sometimes far away from the sea it came from. This real-world monsoon observation traces the complete water cycle driven by the Sun's heat.",
+      "scope_level": "module",
+      "supported_topic_ids": [
+        "M2.S4.T8",
+        "M2.S6.T12",
+        "M2.S6.T13"
+      ]
+    },
+    {
+      "example_id": "EX5",
+      "example_theme": "Shadow Clock in the School Playground",
+      "example_description": "Students stand in the playground at 8 AM and mark the tip of their own shadow with chalk. They return at 10 AM and 12 PM and mark again. The shadow moves and shortens — just as ancient humans used gnomon shadow lengths to tell the time long before wristwatches existed. This connects light, shadows, and the measurement of time in one simple activity.",
+      "scope_level": "module",
+      "supported_topic_ids": [
+        "M2.S6.T12",
+        "M2.S6.T13",
+        "M2.S6.T14"
+      ]
+    },
+    {
+      "example_id": "EX6",
+      "example_theme": "Kitchen as a Science Lab — Plants and Cooking",
+      "example_description": "Students observe that a banana ripens (and can't be 'unripened'), a dal plant on the terrace makes its own food using sunlight, and humans must eat dal to get the same nutrients. This kitchen-to-terrace journey connects irreversible changes, plant nutrition, and animal life processes in one coherent everyday story.",
+      "scope_level": "chapter",
+      "supported_topic_ids": [
+        "M2.S4.T7",
+        "M2.S5.T10",
+        "M2.S5.T11"
+      ]
+    },
+    {
+      "example_id": "EX7",
+      "example_theme": "The 'Question the Answer' Reverse Thinking Game",
+      "example_description": "In class, the teacher writes 'Just add some milk' on the board and asks students to think of as many different questions as possible that this could answer. Some say 'How do you fix too-strong tea?', others say 'How do you make kheer thinner?' or 'What do I do with dry cereal?' This shows that a single answer can come from very different scientific (and non-scientific) situations — exactly the spirit of Activity 1.1.",
+      "scope_level": "segment",
+      "supported_topic_ids": [
+        "M3.S8.T16",
+        "M3.S8.T17"
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "module_id": "M1",
+      "module_name": "Science as a Process of Discovery",
+      "segments": [
+        {
+          "segment_id": "M1.S1",
+          "segment_name": "What Science Is and How It Works",
+          "topics": [
+            {
+              "topic_id": "M1.S1.T1",
+              "topic_name": "Science as a Way of Thinking",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S1.T1.O1",
+                  "objective_text": "Describe science as a process of questioning, observing, and exploring rather than a fixed set of facts",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M1.S1.T1.O2",
+                  "objective_text": "Distinguish between science as a collection of facts and science as a way of thinking",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "The Ever-Evolving World of Science\n\nWe hope you enjoyed your adventures with Curiosity in Grade 6, and are now ready to continue our journey into the wonderful world of science. This again, is not just a textbook with facts — it is an invitation to question, to perform experiments, and to explore, as we try to understand the beautiful world we live in. The world of science covers everything — small and large, near and far. We may be looking at tiny cells inside a leaf, or the movement of the sun and the stars. We may be testing out the materials around us at home, or discussing how water flows underground. As you go through the chapters in this book, you will start new adventures that challenge your thinking, expand your knowledge, and help you become an explorer, making small discoveries for yourself.\n\nBefore we dive into our exciting journey, take a moment to observe something special about this book. Look at the page numbers — they follow the playful flight of a butterfly and the soaring of a paper plane! Just as a butterfly flutters freely and a paper plane flies into the sky, learning takes flight when curiosity leads the way. Did you know that something as simple as a paper plane inspired real scientific explorations of flight? From early inventors studying bird wings to modern engineers designing aircraft, the dream of flying started with simple observations and experiments. So, as you turn each page, let your imagination take flight — exploring new ideas, discovering wonders, and reaching for the skies!\n\nExploration, of course, isn't just about discovering new facts or learning about different things in nature. Science, as we said in Grade 6, is a process, so it is about a way of thinking that welcomes curiosity, asks questions, and is open to the unknown. In Grade 7, we will try to ask deeper questions: How do things work? Why do events happen the way they do? And what can we learn from the patterns that we see in nature?",
+              "modified_chunk": "HOOK: Have you ever watched a paper plane glide through the air and wondered — what keeps it up? That simple wonder is exactly where science begins.\n\nRECALL: In Grade 6, we started our journey with Curiosity and saw that science is not just a list of facts to memorise. You already know that asking questions is part of science. Now we go deeper.\n\nCORE: Science is a way of thinking — not just a textbook with facts. It is an invitation to question, to perform experiments, and to explore the beautiful world we live in. The world of science covers everything, small and large, near and far. We may be looking at tiny cells inside a leaf, or the movement of the Sun and the stars. As you go through this book, you will start new adventures that challenge your thinking, expand your knowledge, and help you become an explorer.\n\nVISUAL BRIDGE: Imagine you are a butterfly fluttering from flower to flower — you never follow a fixed path, but every flower you visit teaches you something new. That is exactly what science does. Just as a butterfly flutters freely, learning takes flight when curiosity leads the way.\n\nWORK-THROUGH: Think about the paper plane — someone long ago watched a bird glide with outstretched wings. That single observation made them ask: 'Why does the bird not fall?' That question led to experiments with wing shapes, which eventually led to real aircraft. The journey started with one simple observation and a curious mind — exactly the scientific way of thinking.\n\nERROR ALERT: Many students think science is only about memorising definitions and formulas. That is not true. Science is first and foremost a way of thinking that welcomes curiosity, asks questions, and is open to the unknown. Facts are the result of that thinking process, not the starting point. If someone asks you 'What is science?', do not answer with a definition from a textbook. Instead, say: 'Science is a way of exploring the world — by observing what happens around us, asking why it happens, and testing our ideas through experiments.' That is the real answer, and it is the spirit of everything you will learn in Grade 7.",
+              "media_intent": [
+                {
+                  "media_id": "M1.S1.T1.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Science as a Spectrum: From Tiny Cells to the Stars",
+                  "intent_description": "A split-panel illustration showing the vast scale of science: on one side, a magnified view of cells inside a leaf; on the other, the movement of planets and stars in space. Both panels are connected by a central figure of a curious child with a magnifying glass, symbolising the single mindset that explores both extremes.",
+                  "pedagogical_purpose": "Anchors the introductory concept that science covers everything — small and large, near and far. Gives students a concrete visual referent for the abstract idea that science is a broad way of thinking, not a narrow subject.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M1.S1.T1.O1"
+                },
+                {
+                  "media_id": "M1.S1.T1.MI2",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "From Paper Plane to Real Aircraft: Science Begins with Observation",
+                  "intent_description": "A sequential illustration showing three panels: (1) a child flying a paper plane in a school corridor, (2) early inventors sketching bird wing shapes, and (3) a modern aircraft in flight. Arrows connect each panel to show the progression from simple observation to scientific exploration to engineering achievement.",
+                  "pedagogical_purpose": "Makes the textbook's paper plane metaphor visually concrete. Students see how a single curious observation can spark a chain of scientific thinking — establishing the 'way of thinking' framing from the very first visual.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M1.S1.T1.O2"
+                },
+                {
+                  "media_id": "M1.S1.T1.MI3",
+                  "type": "video",
+                  "priority": 2,
+                  "title": "What Does It Mean to Think Like a Scientist?",
+                  "intent_description": "A short animated video (2–3 min) showing a child encountering an everyday mystery — why does bread go stale? — and walking through the scientific thinking process: observing, questioning, hypothesising, testing, and arriving at more questions. The video ends with the message that science is a mindset, not a checklist.",
+                  "pedagogical_purpose": "Deepens understanding by showing the scientific way of thinking in action through a relatable, everyday example. Bridges the abstract concept from the text to a concrete mental process students can identify with.",
+                  "linked_objective_id": "M1.S1.T1.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "video"
+              ]
+            },
+            {
+              "topic_id": "M1.S1.T2",
+              "topic_name": "Curiosity and Questioning in Science",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S1.T2.O1",
+                  "objective_text": "Explain why asking questions is as important as finding answers in scientific thinking",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M1.S1.T2.O2",
+                  "objective_text": "Identify the role of curiosity and open-mindedness as essential attitudes in science",
+                  "bloom_level": "remember"
+                }
+              ],
+              "original_chunk": "To do this, we have to step out of this book, step out of the classroom perhaps, and experience the world through activities and experiments. These are experiences that we hope will not just be interesting or exciting but also serve as stepping stones to a deeper understanding of the environment we live in and of our place on this planet. We believe that this will also help you to see science as an ongoing process of discovery.",
+              "modified_chunk": "HOOK: Have you ever done a school experiment and then found yourself wondering — 'But what if I changed one thing?' That feeling of wanting to explore more is the heart of science.\n\nRECALL: We just saw that science is a way of thinking. You also know from everyday life that the best way to truly understand something is to do it yourself — not just read about it.\n\nCORE: To understand science deeply, we have to step out of this book, step out of the classroom perhaps, and experience the world through activities and experiments. These experiences are not just interesting or exciting — they are stepping stones to a deeper understanding of the environment we live in and of our place on this planet. Doing science helps us see it as an ongoing process of discovery.\n\nVISUAL BRIDGE: Imagine trying to learn swimming by only reading a book about it. You could memorise every stroke, but until you jump into the water, you haven't really learned swimming. Science is the same — activities and experiments are the water you need to jump into.\n\nWORK-THROUGH: Suppose you are curious about why a mango ripens faster when kept in a closed container with a banana. Reading about it gives you one level of understanding. But if you actually keep one mango with a banana and one mango alone, observe them each day, and record what you see — that experience becomes a true stepping stone to understanding plant biology and chemical changes.\n\nERROR ALERT: Some students think that doing experiments is only for advanced students or scientists in laboratories. That is a misconception. Every observation you make at home — watching water evaporate, noticing dew on grass in the morning, or seeing bread go stale — is part of the ongoing process of discovery that science is built on.",
+              "media_intent": [
+                {
+                  "media_id": "M1.S1.T2.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Curiosity in Action: Stepping Out of the Classroom",
+                  "intent_description": "An illustration showing a student in two settings: one sitting at a desk reading a book, and another kneeling in a garden observing a plant up close with a notebook. A thought bubble above the student's head in the garden shows a string of question marks transforming into lightbulbs — symbolising curiosity leading to discovery.",
+                  "pedagogical_purpose": "Provides a concrete visual anchor for the idea that curiosity and hands-on experience are the essential fuel of science — not passive reading. Helps students connect the abstract concept of 'stepping out of the classroom' to a real image.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M1.S1.T2.O2"
+                },
+                {
+                  "media_id": "M1.S1.T2.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Science is an Ongoing Process — The Discovery Cycle",
+                  "intent_description": "A circular diagram showing the cycle: Observe → Question → Experiment → Discover → Observe again. Each stage is illustrated with a small icon (eye, question mark, flask, lightbulb, eye again). The circular arrow emphasises that discovery does not end — it loops back to more observation and more questions.",
+                  "pedagogical_purpose": "Visually reinforces that science is an ongoing process of discovery — not a linear path from question to final answer. Prepares students for the iterative nature of science explored later in T15.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M1.S1.T2.O1"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M1.S1.T3",
+              "topic_name": "Science, Responsibility, and the Environment",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S1.T3.O1",
+                  "objective_text": "Explain how science is linked to environmental responsibility and sustainability",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M1.S1.T3.O2",
+                  "objective_text": "Describe how human activities connect to the natural world and society",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "And not just about discovery alone, but also about responsibility. As young science explorers, you will soon see how human activities are linked to what happens in the natural world and are connected to the society we live in. You will, we hope, also see the role that science can play in addressing environmental challenges and help in creating a more sustainable world.",
+              "modified_chunk": "HOOK: You have seen news reports about melting glaciers, floods during monsoon, and forests being cleared. Did you ever think — what does science have to do with all of this?\n\nRECALL: We have seen that science is about exploration and discovery. But science does not exist in isolation — it is deeply connected to the world we all share and the problems our planet faces.\n\nCORE: Science is not just about discovery alone — it is also about responsibility. As young science explorers, you will see how human activities are linked to what happens in the natural world and are connected to the society we live in. Science can play a key role in addressing environmental challenges and help in creating a more sustainable world.\n\nVISUAL BRIDGE: Imagine a spider's web — each thread is connected to every other thread. If you touch one thread, the whole web shakes. Human activities, nature, and society are like that web. Science helps us understand which threads we are pulling and what the consequences might be.\n\nWORK-THROUGH: Here is a real connection: farmers in India use fertilisers to grow more food (human activity). Some fertilisers wash into rivers during the monsoon (natural world impact). This causes certain water plants to grow rapidly, reducing oxygen in the water and harming fish (environmental challenge). Scientists studied this chain of events, and their findings helped develop guidelines for responsible fertiliser use — that is science serving both discovery and responsibility.\n\nERROR ALERT: A common misunderstanding is that science and the environment are separate subjects. They are deeply interlinked. Understanding science is one of the most powerful tools we have to protect our environment and build a sustainable future for all living things on Earth.",
+              "media_intent": [
+                {
+                  "media_id": "M1.S1.T3.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Web of Connections: Human Activities and the Natural World",
+                  "intent_description": "An illustration styled as a spider's web with labelled nodes: 'Human Activity' (e.g., using fertilisers), 'Natural World' (e.g., river), 'Society' (e.g., fish farmers), and 'Science' (a scientist with a clipboard). Lines between nodes show arrows of cause and effect, making the interconnection of human actions and natural consequences visible.",
+                  "pedagogical_purpose": "Makes the spider's web metaphor from the text visually concrete. Students immediately see that human activities, the natural world, and science are not separate — they are threads in the same web. This builds the core idea of environmental responsibility.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M1.S1.T3.O2"
+                },
+                {
+                  "media_id": "M1.S1.T3.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Science in Service of the Planet — Three Roles of Science",
+                  "intent_description": "A three-panel infographic showing: (1) Science as Discovery — a scientist observing nature, (2) Science as Understanding — a diagram of cause and effect in an ecosystem, (3) Science as Responsibility — engineers installing solar panels and planting trees. Labels highlight that all three are part of what science means.",
+                  "pedagogical_purpose": "Extends the concept of science beyond discovery to include responsibility and sustainability. Reinforces both learning objectives by showing the full scope of science as both intellectual and ethical.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M1.S1.T3.O1"
+                },
+                {
+                  "media_id": "M1.S1.T3.MI3",
+                  "type": "video",
+                  "priority": 3,
+                  "title": "Scientists Working on Environmental Challenges in India",
+                  "intent_description": "A short documentary-style video (2–3 min) profiling real or representative examples of scientists in India who study environmental issues — water pollution, air quality, soil degradation — and how their scientific findings informed policy or community action. The video highlights how science serves responsibility.",
+                  "pedagogical_purpose": "Provides real-world context for the idea that science addresses environmental challenges. Bridges the conceptual text to tangible, relatable examples from India, increasing relevance for Grade 7 students.",
+                  "linked_objective_id": "M1.S1.T3.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "video"
+              ]
+            }
+          ]
+        },
+        {
+          "segment_id": "M1.S2",
+          "segment_name": "The Interconnected Fields of Science",
+          "topics": [
+            {
+              "topic_id": "M1.S2.T4",
+              "topic_name": "Branches of Science and Their Connections",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M1.S2.T4.O1",
+                  "objective_text": "List the major branches of science covered in Grade 7: physics, chemistry, biology, and earth sciences",
+                  "bloom_level": "remember"
+                },
+                {
+                  "objective_id": "M1.S2.T4.O2",
+                  "objective_text": "Explain how ideas from one branch of science can inspire questions or discoveries in another",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "But let's get back into this book for now. You will read about topics in different fields of science, from physics and chemistry to biology and earth sciences. While they might appear as different chapters, just as we had said in Grade 6, they are all interconnected. Scientific ideas in one area often inspire discoveries in another, or at least allow us to ask questions in another area.",
+              "modified_chunk": "HOOK: When a doctor uses an X-ray machine to check a broken bone, they are using physics — but they are also helping living things survive. Can physics and biology be connected? Absolutely!\n\nRECALL: You have already studied some science in Grade 6 and probably know the names of subjects like physics, chemistry, and biology. But did you see them as separate boxes, each with no connection to the others?\n\nCORE: In this book, you will read about topics in different fields of science — from physics and chemistry to biology and earth sciences. While they might appear as separate chapters, they are all interconnected. Scientific ideas in one area often inspire discoveries in another, or at least allow us to ask questions in another area.\n\nVISUAL BRIDGE: Think of the branches of a large banyan tree. Each branch looks separate and goes in its own direction, but they all share the same trunk and the same roots. Physics, chemistry, biology, and earth sciences are like those branches — each explores its own area, but they all grow from the same roots of scientific thinking and curiosity.\n\nWORK-THROUGH: Here is a real example of interconnection: scientists studying the chemistry of water discovered that it dissolves many substances. This idea helped biologists understand how nutrients dissolve in blood and reach every cell of the body. It also helped earth scientists understand how minerals from rocks dissolve and enter groundwater. One chemical fact — water is a great solvent — created ripples across multiple branches of science.\n\nERROR ALERT: Students sometimes think they can master biology without caring about chemistry, or understand physics without any connection to the earth sciences. This is not accurate. The most exciting discoveries in science almost always happen at the boundaries between branches — where ideas from one field spark new questions in another.",
+              "media_intent": [
+                {
+                  "media_id": "M1.S2.T4.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Banyan Tree of Science: Four Branches, One Trunk",
+                  "intent_description": "An illustrated banyan tree where the trunk is labelled 'Scientific Thinking and Curiosity' and the four main branches are labelled Physics, Chemistry, Biology, and Earth Sciences. Each branch shows a small icon of a topic from Grade 7 (e.g., lightning bolt for physics, flask for chemistry, leaf for biology, mountain for earth sciences). Connecting roots below all four branches emphasise their shared foundation.",
+                  "pedagogical_purpose": "Gives students a memorable visual map of the four branches of science and their shared roots. The banyan tree metaphor from the text becomes a concrete anchor image that students can recall when moving between chapters.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M1.S2.T4.O1"
+                },
+                {
+                  "media_id": "M1.S2.T4.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "How One Science Fact Connects Three Branches — Water as a Solvent",
+                  "intent_description": "A diagram showing a central fact box: 'Water dissolves substances.' Three arrows radiate outward to three circles: (1) Chemistry — 'Solutions and reactions in water', (2) Biology — 'Nutrients dissolve in blood', (3) Earth Sciences — 'Minerals dissolve into groundwater'. Each circle shows a small illustrative icon.",
+                  "pedagogical_purpose": "Makes the abstract idea of interdisciplinary science concrete and specific. Students see exactly how one chemistry fact has practical implications in biology and earth sciences — supporting the 'explain how ideas in one area inspire another' objective.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M1.S2.T4.O2"
+                },
+                {
+                  "media_id": "M1.S2.T4.MI3",
+                  "type": "2d_tool",
+                  "priority": 2,
+                  "title": "Branch Sort: Match the Science Question to Its Branch",
+                  "intent_description": "An interactive drag-and-drop activity where students are given 8–10 everyday science questions (e.g., 'Why does iron rust?', 'How do fish breathe?', 'Why do volcanoes erupt?') and must sort them into the correct branch of science: Physics, Chemistry, Biology, or Earth Sciences. Some questions intentionally span two branches to prompt discussion.",
+                  "pedagogical_purpose": "Practises recall of branch names while also challenging students to think about boundaries and overlaps between branches — directly supporting both objectives. The activity format is accessible for an introductory overview chapter.",
+                  "linked_objective_id": "M1.S2.T4.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "2d_tool"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_id": "M2",
+      "module_name": "A Preview of Grade 7 Science Topics",
+      "segments": [
+        {
+          "segment_id": "M2.S3",
+          "segment_name": "Properties and Classification of Materials",
+          "topics": [
+            {
+              "topic_id": "M2.S3.T5",
+              "topic_name": "Everyday Properties of Materials",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S3.T5.O1",
+                  "objective_text": "Identify everyday questions about material properties such as sourness of fruits and stain behaviour",
+                  "bloom_level": "remember"
+                },
+                {
+                  "objective_id": "M2.S3.T5.O2",
+                  "objective_text": "Describe how everyday observations lead to scientific investigations about material properties",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "So, let's take a quick journey through our book for this year. We will start by looking at the properties of materials around us, mostly the things we experience but perhaps never ask questions about — why are some fruits sour? What happens when we wash a haldi stain on our school uniform?",
+              "modified_chunk": "HOOK: Why is raw mango so sour but a ripe mango so sweet? Why does a haldi stain on your school uniform refuse to come out with just water? These are not just kitchen puzzles — they are scientific questions waiting to be explored!\n\nRECALL: We know from everyday life that different materials behave differently. You have handled metals, plastics, fruits, and fabrics. But have you ever stopped to ask why they behave the way they do?\n\nCORE: We will start our journey through Grade 7 science by looking at the properties of materials around us — mostly things we experience every day but perhaps never ask questions about. Why are some fruits sour? What happens when we try to wash a haldi stain on our school uniform? These familiar, everyday observations are exactly where scientific investigations about material properties begin.\n\nVISUAL BRIDGE: Imagine being a detective at a crime scene — every material around you leaves a clue. A haldi stain on fabric, a sour taste on your tongue, a smooth surface that repels water — each of these is a clue about what that material is made of and how it interacts with other substances. Science is the art of reading those clues.\n\nWORK-THROUGH: Think about haldi (turmeric). When it touches your skin or fabric, it leaves a yellow stain. Plain water does not remove it easily, but a little soap or lemon juice helps. Why? Because haldi contains a pigment called curcumin that does not dissolve easily in water but does respond to acidic or alkaline substances. Simply asking 'Why does the stain behave this way?' is the first step in investigating the properties of materials.\n\nERROR ALERT: Students sometimes think that scientific investigations only happen in laboratories with fancy equipment. In reality, the kitchen, the school garden, and even your lunch box are full of materials with fascinating properties waiting to be investigated. Everyday observations are a perfectly valid starting point for scientific inquiry.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S3.T5.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Everyday Materials as Scientific Mysteries",
+                  "intent_description": "A flat-lay illustration of common Indian household items arranged as a detective's evidence board: a raw mango (sour), a ripe mango (sweet), a school uniform with a yellow haldi stain, a lemon slice, and a glass of water. Each item has a small question-mark label — e.g., 'Why does haldi stain so deeply?' — framing familiar items as open scientific questions.",
+                  "pedagogical_purpose": "Directly anchors the textbook examples (sour fruits, haldi stain) as recognisable everyday objects that carry scientific questions. Activates prior experience and sets up the 'detective' framing of material properties investigation.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S3.T5.O1"
+                },
+                {
+                  "media_id": "M2.S3.T5.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "From Observation to Investigation: The Haldi Stain Story",
+                  "intent_description": "A three-step visual sequence: Step 1 shows a haldi stain on a white cloth; Step 2 shows a student trying water (stain remains) and then lemon juice (stain fades); Step 3 shows a simple diagram of curcumin molecules and their interaction with acid. Each step is labelled: Observation → Experiment → Explanation.",
+                  "pedagogical_purpose": "Shows the complete arc from an everyday observation to a scientific investigation, making the concept of 'everyday observations as the start of science' concrete and sequentially clear.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S3.T5.O2"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M2.S3.T6",
+              "topic_name": "Electrical Properties and Metals vs Non-Metals",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S3.T6.O1",
+                  "objective_text": "Describe how testing materials with electric circuits leads to classifying them as metals or non-metals",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S3.T6.O2",
+                  "objective_text": "Identify which materials allow a lamp to glow as conductors and predict their classification",
+                  "bloom_level": "apply"
+                }
+              ],
+              "original_chunk": "We then move on and play with some electric batteries, lamps and wires to try to find other kinds of properties of materials. What kind of materials do we need to make a lamp glow? This will lead us to classifying materials based on their properties — and we will enter the world of metals and non-metals.",
+              "modified_chunk": "HOOK: If you connected a small torch bulb, a battery, and two wires — would a wooden stick make the bulb glow? What about an aluminium foil? Why does one glow and the other not?\n\nRECALL: We just saw that materials have different properties that we can investigate. You also know from everyday life that electric wires are made of copper inside a plastic covering. Have you wondered why copper is inside and plastic is outside?\n\nCORE: We will play with electric batteries, lamps, and wires to find other kinds of properties of materials. The key question is: what kind of materials do we need to make a lamp glow? This investigation leads us to classify materials based on their properties, and we enter the world of metals and non-metals.\n\nVISUAL BRIDGE: Imagine a highway with toll gates. Some vehicles (electricity) can pass through smoothly — those roads are conductors. Other roads have walls blocking the way — those are non-conductors, or insulators. Metals are like open highways for electricity, while most non-metals are like blocked roads.\n\nWORK-THROUGH: In a simple circuit, connect a battery, a small bulb, and two wires with clips. Touch the clips to a coin — the bulb glows! The coin is metal (conductor). Now touch the clips to a rubber eraser — the bulb stays dark. The eraser is a non-metal (insulator). By testing different materials — an iron nail, a plastic scale, a graphite pencil tip, a glass bangle — and recording which ones make the bulb glow, we are classifying materials based on their electrical property. This is exactly what scientists do.\n\nERROR ALERT: Many students assume that all metals always conduct electricity and all non-metals never do. However, graphite (a form of carbon, which is a non-metal) does conduct electricity and makes the bulb glow. This is why it is important to actually test and observe rather than assume — evidence always wins over assumptions in science.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S3.T6.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Simple Circuit Test: Which Materials Make the Bulb Glow?",
+                  "intent_description": "A clear, labelled diagram of a simple electric circuit with a battery, connecting wires, a small bulb, and two testing clips. The image shows the circuit being tested on different materials arranged around it: a coin (bulb ON), a rubber eraser (bulb OFF), an iron nail (bulb ON), a plastic scale (bulb OFF), and a graphite pencil tip (bulb ON — highlighted as the surprising exception). Each result is marked with a tick or cross.",
+                  "pedagogical_purpose": "Directly visualises the investigation method described in the text. Students see the setup and results at a glance, priming them for the actual experiment and making the classification of conductors vs insulators concrete before deeper instruction.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S3.T6.O1"
+                },
+                {
+                  "media_id": "M2.S3.T6.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Metals vs Non-Metals: The Highway and the Blocked Road",
+                  "intent_description": "A dual illustration: on the left, an open highway labelled 'Metal — Conductor' with small arrow-vehicles (representing electric current) flowing freely. On the right, the same highway is blocked by a wall labelled 'Non-Metal — Insulator' with the vehicles stopped. Below the highway metaphor, a real-world example shows a copper wire (conductor) inside a plastic cover (insulator) from a household cable.",
+                  "pedagogical_purpose": "Makes the abstract concept of electrical conductivity concrete through the highway metaphor and a familiar real-world object — the household wire. Connects metaphor to application so students understand why wires are made the way they are.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S3.T6.O2"
+                },
+                {
+                  "media_id": "M2.S3.T6.MI3",
+                  "type": "2d_tool",
+                  "priority": 2,
+                  "title": "Virtual Circuit Tester: Conductor or Insulator?",
+                  "intent_description": "An interactive drag-and-drop tool where students drag different materials (coin, eraser, nail, pencil graphite, wooden stick, aluminium foil, glass) into a virtual circuit and observe whether the bulb lights up. Results are shown instantly. After each test, the material is sorted into a 'Metals / Conductors' or 'Non-Metals / Insulators' column.",
+                  "pedagogical_purpose": "Allows students to 'perform' the investigation described in the text in a low-stakes digital environment before or after the physical experiment. Reinforces the apply-level objective of identifying and predicting conductor classification.",
+                  "linked_objective_id": "M2.S3.T6.O2"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "2d_tool"
+              ]
+            }
+          ]
+        },
+        {
+          "segment_id": "M2.S4",
+          "segment_name": "Changes in Materials and the Role of Heat",
+          "topics": [
+            {
+              "topic_id": "M2.S4.T7",
+              "topic_name": "Reversible and Irreversible Changes",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S4.T7.O1",
+                  "objective_text": "Distinguish between reversible and irreversible changes using everyday examples such as melting ice and a battery running out",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S4.T7.O2",
+                  "objective_text": "Classify given examples of change as reversible or irreversible",
+                  "bloom_level": "apply"
+                }
+              ],
+              "original_chunk": "We know from our experience that a torch battery runs out eventually, and can't be used again. We'll explore what kind of changes happen around us. Some changes can be reversed and others cannot be reversed.\n\nBatteries run out, ice melts into water, fruits ripen, rocks break into pebbles… what kind of changes are these?",
+              "modified_chunk": "HOOK: You have probably used a torch battery until it went completely dead. Can you recharge it and use it again? No! But if an ice cube melts in your water bottle, can you freeze it again? Yes! Why is one change permanent and the other not?\n\nRECALL: We have been exploring how materials have different properties. Now we look at how materials change — and whether those changes can be undone.\n\nCORE: We know from experience that a torch battery runs out eventually and cannot be used again. We will explore what kinds of changes happen around us. Some changes can be reversed and others cannot be reversed. A battery runs out, ice melts into water, fruits ripen, rocks break into pebbles — all these are different kinds of changes that we need to understand and classify.\n\nVISUAL BRIDGE: Imagine folding a piece of paper — you can unfold it, but the crease remains. Now imagine burning that paper — there is no going back. Some changes are like folding (reversible), while others are like burning (irreversible). Science helps us understand where the boundary lies between the two.\n\nWORK-THROUGH: Let's trace two familiar changes step by step. First: you put an ice cube in a glass of nimbu paani on a hot summer day. The ice melts into water. Later, you put that water in the freezer — it becomes ice again. The change was reversed! This is a reversible change. Second: a raw mango ripens over a few days and becomes sweet and soft. Can you turn a ripe mango back into a raw, sour one? No. The chemical changes inside the fruit cannot be undone. This is an irreversible change. Identifying which is which is the key scientific skill here.\n\nERROR ALERT: A very common confusion is between reversible and temporary changes. Students sometimes think that if a change takes a long time (like rocks slowly breaking into pebbles), it must be reversible because it seems like nature could undo it. However, whether a change is reversible or irreversible depends on whether the original substance and its properties can be fully restored — not on how fast or slow the change is.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S4.T7.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Reversible vs Irreversible: Two Columns of Everyday Change",
+                  "intent_description": "A two-column illustrated comparison chart. The left column (labelled Reversible) shows: melting ice → freezing back to ice, and folding paper → unfolding paper. The right column (labelled Irreversible) shows: battery running out (dead torch), ripe mango (cannot become raw again), burning paper (ash remains). Each row uses a simple before-and-after visual with an arrow showing the direction of the change and a circular back-arrow (or a blocked arrow) to show reversibility or lack thereof.",
+                  "pedagogical_purpose": "Provides the key anchor visual for distinguishing reversible from irreversible changes. The parallel two-column format makes the comparison immediately obvious and memorable for Grade 7 students.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S4.T7.O1"
+                },
+                {
+                  "media_id": "M2.S4.T7.MI2",
+                  "type": "2d_tool",
+                  "priority": 2,
+                  "title": "Sort It: Reversible or Irreversible?",
+                  "intent_description": "An interactive drag-and-drop sorting activity with 10–12 illustrated change cards (e.g., ice melting, banana ripening, salt dissolving in water, wood burning, iron rusting, chocolate melting, glass breaking, paper folding). Students drag each card to either a 'Reversible Changes' bucket or an 'Irreversible Changes' bucket. After sorting, explanations pop up for each card.",
+                  "pedagogical_purpose": "Practises the apply-level objective of classifying changes. The activity immediately follows the conceptual introduction and reinforces understanding through active classification before formal assessment.",
+                  "linked_objective_id": "M2.S4.T7.O2"
+                },
+                {
+                  "media_id": "M2.S4.T7.MI3",
+                  "type": "video",
+                  "priority": 3,
+                  "title": "Everyday Changes Around Us: Reversible and Irreversible",
+                  "intent_description": "A short animated video (2–3 min) showing 4–5 everyday changes in Indian contexts — a candle burning, dough being kneaded, ice melting, and a plant wilting — and asking students to classify each one before revealing the answer with a brief explanation. The video uses a warm, conversational tone suited for Grade 7.",
+                  "pedagogical_purpose": "Provides additional classifiable examples in a visual, engaging format for students who benefit from seeing the concept demonstrated across varied contexts. Serves as supplementary reinforcement for students who found the core examples insufficient.",
+                  "linked_objective_id": "M2.S4.T7.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "2d_tool",
+                "video"
+              ]
+            },
+            {
+              "topic_id": "M2.S4.T8",
+              "topic_name": "Heat Flow and Its Effects",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S4.T8.O1",
+                  "objective_text": "Explain how heat causes changes in materials such as melting of ice and glaciers",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S4.T8.O2",
+                  "objective_text": "Describe the role of the Sun's heat in driving the water cycle from evaporation to rainfall",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "Some of these happen, or happen faster, when things are heated. We will look at how heat flows — whether it is the melting of an ice cube in a glass, or the melting of a glacier. Water is, of course, everywhere, and with the heat from the Sun, it evaporates from the seas and falls as rain, perhaps trickling down into the ground, somewhere far away.",
+              "modified_chunk": "HOOK: On a hot summer afternoon, a puddle of rainwater disappears by evening. Where does it go? And who is responsible for making it vanish — the Sun!\n\nRECALL: We just saw that some changes can be reversed and others cannot. Now we look at one of the most powerful agents that causes and speeds up changes in materials: heat.\n\nCORE: Some changes happen, or happen faster, when things are heated. We will look at how heat flows — whether it is the melting of an ice cube in a glass, or the melting of a glacier. Water is everywhere, and with the heat from the Sun, it evaporates from the seas and falls as rain, perhaps trickling down into the ground somewhere far away.\n\nVISUAL BRIDGE: Think of heat as a very energetic friend who nudges everything it touches. When heat touches ice, the ice molecules get so energised that they can no longer stay locked together — they become liquid water. When heat touches liquid water in the ocean, the molecules get so energised that they escape into the air as water vapour. Heat is the invisible force that drives enormous changes, from a small ice cube in your glass to a massive glacier on a mountain.\n\nWORK-THROUGH: Follow the journey of water driven by heat. Step 1 — The Sun heats the surface of the Arabian Sea. Water molecules gain energy and evaporate, rising as invisible water vapour. Step 2 — As the vapour rises, it cools and condenses into clouds. Step 3 — Wind carries the clouds over land. Step 4 — The clouds release rain over the Western Ghats. Step 5 — Some rainwater flows into rivers, some soaks into the ground. This entire cycle — the water cycle — is powered by the Sun's heat. The same principle that melts your ice cream on a summer afternoon is responsible for bringing the Indian monsoon every year.\n\nERROR ALERT: Students often think that melting is always a reversible change. While melting ice back into water and then freezing it is reversible, not all melting events lead to easy reversal. When a glacier melts into the ocean, the fresh water mixes with saltwater — that cannot simply be reversed by cooling. Understanding the context and scale of a change matters when deciding whether it is truly reversible.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S4.T8.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Heat as the Driver of Change — From Ice Cube to Glacier",
+                  "intent_description": "A dual-scale illustration: on the left, a glass with an ice cube melting in the Sun's rays — labelled 'small scale'. On the right, a mountain glacier with meltwater flowing into a river — labelled 'large scale'. Both images have the Sun shown above as the common heat source, and arrows indicating the direction of heat flow into the material.",
+                  "pedagogical_purpose": "Anchors the textbook's key visual contrast — ice cube and glacier — as two scales of the same process. Students immediately see that heat-driven change operates on both everyday and planetary scales.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S4.T8.O1"
+                },
+                {
+                  "media_id": "M2.S4.T8.MI2",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Indian Monsoon Water Cycle — Powered by the Sun",
+                  "intent_description": "A step-labelled diagram of the water cycle set in an Indian geography context: the Arabian Sea on the left, the Western Ghats in the centre, and a river flowing right. Five numbered steps are annotated: (1) Sun heats the sea → evaporation, (2) vapour rises and cools → cloud formation, (3) wind carries clouds over land, (4) rain falls on the Western Ghats, (5) water flows into rivers and seeps into the ground. The Sun is prominently shown as the energy source driving all steps.",
+                  "pedagogical_purpose": "Provides a geographically relevant visual of the water cycle that directly serves the learning objective about the Sun's role in driving evaporation to rainfall. The Indian monsoon context makes it immediately relatable for Grade 7 students.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S4.T8.O2"
+                },
+                {
+                  "media_id": "M2.S4.T8.MI3",
+                  "type": "video",
+                  "priority": 2,
+                  "title": "The Water Cycle: Sun, Evaporation, Clouds, and Rain",
+                  "intent_description": "A short animated video (2–3 min) tracing the complete water cycle from ocean evaporation to cloud formation to rainfall, with the Sun prominently shown as the energy source at every stage. The animation includes both the small-scale (puddle evaporating) and large-scale (ocean to monsoon) perspectives, connecting them as the same process.",
+                  "pedagogical_purpose": "Animates the static water cycle diagram, showing the dynamic movement of water driven by heat. Video format is especially effective for process-based concepts where sequence and motion matter.",
+                  "linked_objective_id": "M2.S4.T8.O2"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "video"
+              ]
+            }
+          ]
+        },
+        {
+          "segment_id": "M2.S5",
+          "segment_name": "Life Processes and Living Organisms",
+          "topics": [
+            {
+              "topic_id": "M2.S5.T9",
+              "topic_name": "Body Changes During Adolescence",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S5.T9.O1",
+                  "objective_text": "Describe why the human body undergoes rapid changes during middle-school years",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S5.T9.O2",
+                  "objective_text": "Identify adolescence as a phase of significant physical change in humans",
+                  "bloom_level": "remember"
+                }
+              ],
+              "original_chunk": "However, it isn't just changes in materials around us that we see, or the hidden changes in water that we do not see. As we are growing, our bodies are changing as well. Especially around the middle-school years, our bodies are changing rapidly! Why?",
+              "modified_chunk": "HOOK: Have you noticed that some of your classmates have suddenly grown much taller over one summer? Or that your voice sounds different from how it did in Class 5? Something remarkable is happening inside your body — and science can explain it!\n\nRECALL: We have been looking at changes in materials around us. But changes do not only happen to non-living things. Our own bodies are going through dramatic changes, especially at your age.\n\nCORE: It is not just changes in materials around us that we see. As we are growing, our bodies are changing as well. Especially around the middle-school years, our bodies are changing rapidly. Why? This is one of the fascinating biological questions we will explore in Grade 7.\n\nVISUAL BRIDGE: Think of your body like a caterpillar going through metamorphosis. The caterpillar looks very different at each stage — egg, caterpillar, pupa, butterfly. Similarly, the human body goes through its own transformation during the middle-school years, driven by signals from inside the body. This phase is called adolescence, and it is as natural and beautiful as a butterfly emerging from its cocoon.\n\nWORK-THROUGH: Consider what happens when you compare photos of yourself from Class 4 to now. You are taller, your facial features have changed, and your interests and thinking may have evolved too. These rapid physical changes happen because your body has started producing special chemical messengers called hormones. These hormones travel through the blood and give instructions to different parts of your body to grow and change in specific ways. Science helps us understand and appreciate these changes rather than being confused or worried about them.\n\nERROR ALERT: Many students think that body changes during adolescence are unusual or something to be embarrassed about. In fact, these changes are a completely normal and scientifically well-understood process that every human being goes through. Understanding the biology behind these changes helps us see them as a natural, healthy part of growing up.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S5.T9.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Adolescence: A Phase of Rapid Human Change",
+                  "intent_description": "An illustration showing a simple human growth timeline from infancy through to adulthood, with the middle-school years (ages 11–14, labelled 'Adolescence') highlighted in a distinct colour. Small icons indicate rapid changes occurring during this phase — height growth, hormonal signals shown as arrows from internal organs. The tone is informative and age-appropriate, not embarrassing.",
+                  "pedagogical_purpose": "Gives students a clear, factual visual that normalises adolescence as a scientifically understood phase of human development. Supports the remember-level objective of identifying adolescence while building towards the understand-level objective of why it happens.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S5.T9.O2"
+                },
+                {
+                  "media_id": "M2.S5.T9.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Hormones: The Body's Chemical Messengers",
+                  "intent_description": "A simplified body diagram showing glands (e.g., pituitary, thyroid) with labelled arrows sending out 'hormone signals' through the blood to target areas of the body (muscles for growth, vocal cords for voice change). The diagram is clean, non-graphic, and labelled with simple captions appropriate for a Grade 7 introductory overview.",
+                  "pedagogical_purpose": "Supports the understand-level objective by providing a visual explanation of why the body changes rapidly during adolescence — hormonal signalling. This is introduced here as a preview concept to be explored in depth in the relevant chapter.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S5.T9.O1"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M2.S5.T10",
+              "topic_name": "Essential Life Processes in Animals",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S5.T10.O1",
+                  "objective_text": "List the essential life processes — eating, breathing, and circulation — needed for animal survival and growth",
+                  "bloom_level": "remember"
+                },
+                {
+                  "objective_id": "M2.S5.T10.O2",
+                  "objective_text": "Explain how nutrients from food are transported to all parts of the body through circulation",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "Not just us humans, there are life processes that are essential to all animals for their survival. To grow, we have to eat and breathe, blood has to circulate the nutrients from the food all over the body and so on.",
+              "modified_chunk": "HOOK: Right now, as you read this, your heart is beating, your lungs are taking in air, and your stomach is digesting the last meal you ate — all at the same time, without you even thinking about it. How does your body manage all of this?\n\nRECALL: We just talked about the rapid changes happening in our bodies. Those changes require energy and resources. But where does the energy come from and how does it reach every part of the body?\n\nCORE: It is not just humans — there are life processes that are essential to all animals for their survival. To grow, we have to eat and breathe. Blood has to circulate the nutrients from the food all over the body and so on. These three essential life processes — nutrition, breathing, and circulation — are the foundations of animal survival.\n\nVISUAL BRIDGE: Imagine your body as a busy city. Food is the raw material delivered by lorries (the digestive system). Breathing is the power plant that keeps the city running. Blood circulation is the road network — carrying nutrients and energy to every building (cell) in the city. If any one of these systems stops working, the city shuts down. That is why all three life processes are equally essential.\n\nWORK-THROUGH: Let us trace what happens when you eat a bowl of rice at lunch. Step 1 — You eat the rice, and digestion breaks it down into simpler nutrients like glucose. Step 2 — These nutrients are absorbed into the blood through the walls of the small intestine. Step 3 — The heart pumps this nutrient-rich blood through blood vessels to every cell in the body — muscles, brain, skin, and bones. Step 4 — Each cell uses the nutrients to produce energy for growth and activity. Step 5 — Breathing brings in oxygen, which is also carried by the blood to cells to help produce this energy. All three processes — eating, breathing, and circulation — are working together in this one sequence.\n\nERROR ALERT: Students sometimes think that breathing is only for the lungs and that eating is only for the stomach, as if each process is entirely separate from the others. In reality, these life processes are deeply interdependent. Oxygen from breathing and nutrients from eating both travel together in the blood — the two processes cannot truly be separated in a living body.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S5.T10.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Three Essential Life Processes: Nutrition, Breathing, Circulation",
+                  "intent_description": "A simple human body outline with three labelled systems highlighted in different colours: the digestive system (orange, for nutrition), the respiratory system (blue, for breathing), and the circulatory system (red, for circulation). Arrows show how they interact — nutrients and oxygen both entering the blood and being carried to cells throughout the body.",
+                  "pedagogical_purpose": "Provides the anchor visual for all three essential life processes in one image, making their interconnection immediately visible. Students can clearly see how the three systems are not isolated but feed into each other.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S5.T10.O1"
+                },
+                {
+                  "media_id": "M2.S5.T10.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "From Rice Bowl to Every Cell: The Journey of Nutrients",
+                  "intent_description": "A step-by-step pathway illustration following a grain of rice from a plate: (1) into the mouth, (2) through the digestive system, (3) absorbed into the blood, (4) carried by the heart through blood vessels, (5) delivered to a muscle cell. Each step is numbered and briefly labelled. The image is set in a warm, Indian kitchen context with a bowl of rice as the starting point.",
+                  "pedagogical_purpose": "Makes the circulation of nutrients from food to all body cells concrete and sequential. Directly addresses the understand-level objective and uses an Indian food context to enhance relatability for Grade 7 students.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S5.T10.O2"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M2.S5.T11",
+              "topic_name": "How Plants Get Their Food",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S5.T11.O1",
+                  "objective_text": "Describe how plants obtain food and whether they breathe, prompting scientific curiosity",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S5.T11.O2",
+                  "objective_text": "Compare how plants and animals obtain the energy needed to grow and survive",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "But why animals alone? Don't plants also need food to grow? How do they get their food? Do they also breathe? How? Over the time that life has evolved on our planet Earth, it has figured out how to do this in a beautiful and carefully balanced way.",
+              "modified_chunk": "HOOK: You eat food every day — but a mango tree in your garden does not eat anything at all, and yet it grows taller and produces fruit every year. Where does a plant get its food from?\n\nRECALL: We just saw that animals need to eat, breathe, and circulate nutrients to survive. Plants are also living organisms. They also grow, reproduce, and stay alive. But they clearly do not eat like we do.\n\nCORE: Why animals alone? Plants also need food to grow. How do they get their food? Do they also breathe? How? Over the time that life has evolved on our planet Earth, it has figured out how to do this in a beautiful and carefully balanced way.\n\nVISUAL BRIDGE: Imagine a plant as a solar-powered kitchen. The leaves are solar panels that capture energy from sunlight. The roots are the pipes that bring in water from below. Carbon dioxide from the air drifts in through tiny pores in the leaves. The plant's 'kitchen' (the leaf cells) uses sunlight, water, and carbon dioxide to cook up its own food — a sugar called glucose. Unlike animals, plants do not need to hunt for food — they make their own!\n\nWORK-THROUGH: Here is the contrast laid out step by step. A cow eats grass to get nutrients (animal nutrition — external source of food). But the grass the cow is eating made its own food through a process called photosynthesis. The grass used sunlight as energy, water from the soil, and carbon dioxide from the air to produce glucose — no eating required. And yes, plants also breathe — they exchange gases through tiny pores called stomata in their leaves. This elegant, self-sustaining system is how life on Earth stays balanced — plants produce food and oxygen, animals consume both.\n\nERROR ALERT: A very common misconception is that plants get their food from the soil through their roots. While roots absorb water and minerals from the soil (which are important), the actual food (glucose) is manufactured in the leaves using sunlight. The soil provides raw materials, but it is not the source of food. Getting this distinction right is crucial for understanding plant biology.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S5.T11.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Solar-Powered Kitchen: How a Plant Makes Its Own Food",
+                  "intent_description": "An illustrated cross-section of a plant showing: sunlight rays hitting the leaf (labelled 'energy input'), roots absorbing water from soil (labelled 'water input'), carbon dioxide entering through stomata in the leaf (labelled 'CO₂ input'), and glucose being produced inside leaf cells (labelled 'food output'). An error-correction callout highlights that the soil provides water and minerals, but NOT food — food is made in the leaf.",
+                  "pedagogical_purpose": "Directly visualises the photosynthesis inputs and outputs described in the text. The error-correction callout proactively addresses the most common misconception (food comes from soil) that the text flags, making this image both instructional and corrective.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S5.T11.O1"
+                },
+                {
+                  "media_id": "M2.S5.T11.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Plants vs Animals: How Each Gets Its Energy",
+                  "intent_description": "A side-by-side comparison infographic. Left panel (Animal — a cow): shows the cow eating grass, with an arrow chain — food → digestion → nutrients in blood → energy for cells. Right panel (Plant — grass): shows sunlight → leaf → glucose made → energy for plant cells. A central label reads: 'Both need energy to grow, but they get it in completely different ways.'",
+                  "pedagogical_purpose": "Directly serves the compare-level objective. The side-by-side format makes the contrast between animal and plant nutrition immediately visible and memorable for an introductory overview topic.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S5.T11.O2"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            }
+          ]
+        },
+        {
+          "segment_id": "M2.S6",
+          "segment_name": "Time, Motion, Light, and the Universe",
+          "topics": [
+            {
+              "topic_id": "M2.S6.T12",
+              "topic_name": "Measuring Time and Speed",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S6.T12.O1",
+                  "objective_text": "Explain how humans have measured time from shadow observations to modern clocks",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S6.T12.O2",
+                  "objective_text": "Identify the concept of measuring how fast something happens as a scientific question",
+                  "bloom_level": "remember"
+                }
+              ],
+              "original_chunk": "Ah, but what is time? The clock on the wall or a wrist watch tells us the time and how it passes. We get prepared to go to school in the morning and are ready to sleep at night but have you thought about how we measure time? And how fast does something happen?",
+              "modified_chunk": "HOOK: When a cricket match is about to start, the commentator says '10 overs to go in 80 minutes.' How does anyone know how long 80 minutes will be? And have you ever wondered — what IS time, really?\n\nRECALL: We have explored changes in materials, life processes in living things, and now we shift to one of the most fundamental ideas in physics — the measurement of time and speed. You already use time every day: school starts at 8, lunch is at 12, and you sleep by 10.\n\nCORE: The clock on the wall or a wristwatch tells us the time and how it passes. We get prepared to go to school in the morning and are ready to sleep at night. But have we thought about how we measure time? And how fast does something happen? These are scientific questions at the heart of physics.\n\nVISUAL BRIDGE: Imagine you are on a train journey from Delhi to Mumbai. You want to know how long the journey takes and how fast the train moves. Time is what you measure with a clock, and speed is how much distance you cover in a given time. Both are deeply connected — you cannot talk about speed without time, and measuring time helps us make sense of how fast the world around us moves.\n\nWORK-THROUGH: Long before wristwatches, people needed to know the time for farming, prayer, and travel. Farmers in ancient India observed that the shadow of a tall pole was longest in the morning, grew shorter towards noon, and grew long again in the evening. They used this pattern of shadow movement to divide the day into parts. This was an early clock — the shadow was the 'hand' and the ground was the 'face'. Today we use atomic clocks that are accurate to within one second in millions of years. The scientific question 'How do we measure time?' has been answered with increasing precision over thousands of years.\n\nERROR ALERT: Students sometimes confuse time and speed, treating them as the same concept. Time is the duration between two events (measured in seconds, minutes, hours). Speed is how much distance is covered per unit of time (measured in km/h or m/s). They are related but distinct concepts — knowing the time alone does not tell you how fast something is moving.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S6.T12.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "A History of Measuring Time: From Shadow to Atomic Clock",
+                  "intent_description": "A horizontal timeline illustration showing four stages in the history of timekeeping: (1) a gnomon shadow on the ground (ancient India), (2) a sandglass/hourglass, (3) a mechanical pendulum clock, (4) a modern digital clock. Each stage is labelled with a brief caption about the principle used. The visual progression emphasises that science has always improved upon how we measure time.",
+                  "pedagogical_purpose": "Makes the evolution of timekeeping from observation to precision measurement concrete and visually narrative. Directly serves the explain-level objective about how humans have measured time across history.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S6.T12.O1"
+                },
+                {
+                  "media_id": "M2.S6.T12.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Time vs Speed: Two Connected but Different Ideas",
+                  "intent_description": "A clean comparison diagram with two columns: Time (showing a clock face, labelled 'How long did it take? — measured in seconds/minutes/hours') and Speed (showing a moving train with a distance marker, labelled 'How much distance in that time? — measured in km/h or m/s'). A central connecting arrow is labelled 'Speed = Distance ÷ Time', showing the relationship at a preview level without deep calculation.",
+                  "pedagogical_purpose": "Addresses the common confusion between time and speed directly. Gives students a visual reference for both concepts and their relationship, supporting the remember-level objective and building preparedness for the motion chapter.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S6.T12.O2"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M2.S6.T13",
+              "topic_name": "Light, Shadows, and Their Uses",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S6.T13.O1",
+                  "objective_text": "Describe how shadows form and how they were used historically to measure time",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S6.T13.O2",
+                  "objective_text": "Explain how studying the nature of light has deepened our understanding of the universe",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "Long before the age of electric clocks and digital watches, early humans observed the shadows of objects in the Sun and used the position of the shadows to tell the time. Light and shadows are not just useful for shadow puppets or to tell the time. Naturally, light helps us see and today, we've developed a lot of ways to generate light (so we can read a book at night, even when the Sun doesn't shine). But, more importantly, asking questions about the nature of light has given us a very deep understanding of the universe we live in. While we'll perhaps learn about it only later, light and shadows are not just limited to things around us at home.",
+              "modified_chunk": "HOOK: On a sunny afternoon, have you noticed that your own shadow looks very long in the morning but almost disappears at noon, and then grows long again in the evening? Ancient humans noticed this too — and they used it to tell the time!\n\nRECALL: We just discussed how humans have always tried to measure time. Shadows were one of the first tools humans used for this purpose. But light and shadows go far beyond just telling time.\n\nCORE: Long before the age of electric clocks and digital watches, early humans observed the shadows of objects in the Sun and used the position of the shadows to tell the time. Light and shadows are not just useful for shadow puppets or for telling the time. Naturally, light helps us see, and we have developed many ways to generate light so we can read even when the Sun does not shine. But more importantly, asking questions about the nature of light has given us a very deep understanding of the universe we live in.\n\nVISUAL BRIDGE: Think of light as a very fast runner carrying information from every object to your eyes. When the runner is blocked by an object, a dark region forms behind it — that is a shadow. But light is not just a way of seeing nearby objects. Light travels from stars that are so far away that the light you see tonight left that star thousands of years ago. Light is a messenger from the farthest corners of the universe.\n\nWORK-THROUGH: Here is a step-by-step trace of how shadows told time. Step 1 — On a sunny morning, a vertical stick (gnomon) casts a long shadow pointing west. Step 2 — As the Sun moves higher in the sky, the shadow shortens and points more towards the north. Step 3 — At noon, the shadow is at its shortest, pointing almost due north. Step 4 — In the afternoon, the shadow grows again, now pointing east. Early humans marked these shadow positions on the ground and created a sundial — a reliable clock using only light and shadow. Modern scientists studying the speed of light have made even deeper discoveries about the universe.\n\nERROR ALERT: Many students think that a shadow is a 'thing' — like a dark patch of paint on the ground. In reality, a shadow is simply a region where light cannot reach because an object is blocking it. Shadows have no substance of their own — they are the absence of light, not a presence of darkness.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S6.T13.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Sundial: How Shadows Measured Time",
+                  "intent_description": "A top-down diagram of a sundial showing a vertical gnomon at the centre. Three shadow positions are drawn and labelled: 'Morning — long shadow pointing west', 'Noon — short shadow pointing north', and 'Afternoon — long shadow pointing east'. The diagram includes a small Indian context icon (a human standing in a playground, echoing the Example 5 shadow activity).",
+                  "pedagogical_purpose": "Directly visualises the step-by-step shadow-clock explanation from the text. Combines the historical timekeeping concept with the playground shadow activity from Example 5, making it both textbook-accurate and contextually relatable.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S6.T13.O1"
+                },
+                {
+                  "media_id": "M2.S6.T13.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Light: From the Sun to Distant Stars — A Messenger of the Universe",
+                  "intent_description": "A split-panel illustration: the top panel shows a simple ray of light from the Sun casting a shadow of a gnomon — everyday, familiar scale. The bottom panel shows a telescope pointed at a distant star with a label: 'The light from this star left 500 years ago.' A connecting caption reads: 'The same light that makes your shadow carries secrets of the universe.'",
+                  "pedagogical_purpose": "Extends students' understanding of light beyond shadows and timekeeping to its cosmic significance — serving the second objective about how studying light has deepened understanding of the universe. The two-panel format creates a sense of scale progression.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S6.T13.O2"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M2.S6.T14",
+              "topic_name": "Earth, Moon, Sun Movements and Eclipses",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M2.S6.T14.O1",
+                  "objective_text": "Describe how Earth's rotation on its axis, the Moon's orbit around Earth, and Earth's orbit around the Sun cause day, night, and eclipses",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M2.S6.T14.O2",
+                  "objective_text": "Explain how shadows cast by the Earth and Moon lead to the phenomena of eclipses",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "Even the Earth and the Moon can cast shadows, leading to the fascinating phenomena of eclipses. And of course, we have day and night that depend on receiving light from the Sun. To understand all of this, we need to know how the Earth rotates around its axis, how the Moon goes around the Earth, and the Earth around the Sun. And the consequences of these movements on life on our beautiful planet. While all this might have your head spinning, think about it. Isn't it amazing that we humans can wonder about the wonderful world we live in?",
+              "modified_chunk": "HOOK: Have you ever seen a solar eclipse, where the bright Sun is slowly covered by a dark disc in the middle of the day? Did you wonder — what enormous object could possibly block the Sun? The answer is our Moon!\n\nRECALL: We just saw that shadows form when light is blocked by objects. Light and shadows apply not only to everyday objects around us — they apply to the Earth and the Moon as well, on a grand cosmic scale.\n\nCORE: Even the Earth and the Moon can cast shadows, leading to the fascinating phenomena of eclipses. We have day and night that depend on receiving light from the Sun. To understand all of this, we need to know how the Earth rotates around its axis, how the Moon goes around the Earth, and the Earth around the Sun — and the consequences of these movements on life on our beautiful planet.\n\nVISUAL BRIDGE: Imagine three people standing in a line with a torch shining from one end. The person in the middle casts a shadow on the third person. Now replace the torch with the Sun, the middle person with the Moon, and the third person with the Earth. When the Moon's shadow falls on the Earth, we get a solar eclipse. When the Earth's shadow falls on the Moon, we get a lunar eclipse. The same principle that makes your shadow on the wall creates eclipses in space!\n\nWORK-THROUGH: Let us trace what causes day and night, step by step. The Earth is a sphere that rotates on its own axis, completing one full rotation every 24 hours. Step 1 — The side of the Earth facing the Sun receives sunlight — this is day. Step 2 — The side facing away from the Sun is in shadow — this is night. Step 3 — As the Earth rotates, your city moves from the sunlit side to the shadow side and back. This is why sunrise and sunset happen every day. Now for a solar eclipse: Step 4 — The Moon orbits the Earth once every 27 days. Step 5 — On rare occasions, the Moon comes exactly between the Sun and the Earth. Step 6 — The Moon casts its shadow on a small part of the Earth — those people see a solar eclipse.\n\nERROR ALERT: A very common misconception is that a solar eclipse happens every month because the Moon orbits the Earth monthly. However, the Moon's orbit is slightly tilted relative to Earth's path around the Sun, so in most months the Moon passes above or below the Sun's path as seen from Earth. A solar eclipse only happens when the alignment is almost perfect — which is why it is rare and special.",
+              "media_intent": [
+                {
+                  "media_id": "M2.S6.T14.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Day, Night, and Eclipses: The Three-Body Dance",
+                  "intent_description": "A two-panel orbital diagram. Top panel shows Earth rotating on its axis with the Sun on one side: the sunlit half is labelled 'Day' and the shadowed half 'Night'. Bottom panel shows a solar eclipse alignment: Sun → Moon → Earth in a line, with the Moon's shadow cone falling on a small region of Earth. Both panels are clearly labelled and use consistent colour coding (Sun = yellow, Moon = grey, Earth = blue-green).",
+                  "pedagogical_purpose": "Provides the primary anchor visual for both objectives — day/night from Earth's rotation, and eclipses from shadow alignment of Sun-Moon-Earth. The two-panel format allows students to see both phenomena in one image, reinforcing their connection to the same principle (shadow formation).",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M2.S6.T14.O1"
+                },
+                {
+                  "media_id": "M2.S6.T14.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "Solar vs Lunar Eclipse: When Shadows Fall in Space",
+                  "intent_description": "A clear diagram showing both types of eclipse side by side. Left: Solar eclipse — Moon between Sun and Earth, Moon's shadow (umbra and penumbra cones) labelled, small region of Earth's surface highlighted as 'Total solar eclipse visible here'. Right: Lunar eclipse — Earth between Sun and Moon, Earth's shadow falling on the Moon. Error correction note: 'Why not every month? Moon's orbit is tilted — alignment is rare.'",
+                  "pedagogical_purpose": "Deepens understanding of both types of eclipse and directly addresses the common misconception about monthly eclipses. The side-by-side format makes the comparison and the shadow explanation clear.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M2.S6.T14.O2"
+                },
+                {
+                  "media_id": "M2.S6.T14.MI3",
+                  "type": "video",
+                  "priority": 2,
+                  "title": "Why Do Eclipses Happen? — Earth, Moon, and Sun in Motion",
+                  "intent_description": "A short animated video (2–3 min) showing the movements of Earth, Moon, and Sun from a bird's-eye view. The animation shows Earth's daily rotation causing day and night, the Moon's monthly orbit, and the rare moment when all three align to create a solar eclipse. The tilted orbit of the Moon is shown to explain why eclipses are not monthly.",
+                  "pedagogical_purpose": "Animation is the most effective format for showing dynamic celestial movements that static diagrams cannot fully convey. The 3D orbital motion and shadow cone are much clearer in animated form, directly serving both understand-level objectives.",
+                  "linked_objective_id": "M2.S6.T14.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "video"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module_id": "M3",
+      "module_name": "Thinking and Working Like a Scientist",
+      "segments": [
+        {
+          "segment_id": "M3.S7",
+          "segment_name": "The Scientific Mindset",
+          "topics": [
+            {
+              "topic_id": "M3.S7.T15",
+              "topic_name": "Experiments, Observations, and Deeper Questions",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M3.S7.T15.O1",
+                  "objective_text": "Explain why experiments may confirm expectations but also generate new, unexpected questions",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M3.S7.T15.O2",
+                  "objective_text": "Describe the iterative nature of science — observation leads to questions, which lead to experiments, which lead to more questions",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "In the chapters that follow, you'll also make simple observations and do fun experiments, and dive into topics that need careful thinking. Each chapter builds on what you already know and encourages you to ask questions, explore, do hands-on experiments, and think like a scientist! As you will find out, even those experiments that seem to confirm what we think will happen, might lead to some additional questions that might need more experiments and more questions.",
+              "modified_chunk": "HOOK: Have you ever done a science experiment where the result was exactly what you expected — but then immediately wondered, 'Wait, but why did THAT happen?' Even a successful experiment can open more doors than it closes!\n\nRECALL: We have journeyed through materials, life processes, time, light, and the cosmos in this chapter. We also know that science is a way of thinking. Now we focus on what happens after an experiment is done.\n\nCORE: In the chapters that follow, you will make simple observations and do fun experiments, and dive into topics that need careful thinking. Each chapter builds on what you already know and encourages you to ask questions, explore, and think like a scientist! As you will find out, even those experiments that seem to confirm what we think will happen might lead to some additional questions that need more experiments and more questions.\n\nVISUAL BRIDGE: Imagine peeling an onion. Each layer you remove reveals another layer underneath. Scientific experiments are like this — each experiment answers one question but reveals several new ones hiding underneath. The scientist who feels satisfied after answering one question and never asks another is like someone who peels the first layer of an onion and thinks they are done.\n\nWORK-THROUGH: Here is how the iterative nature of science plays out in a real example. A student wants to find out: 'Does ice melt faster in sunlight or in shade?' Step 1 — Observation: the ice cube in the Sun melts much faster. Step 2 — Conclusion confirmed: sunlight (heat) causes faster melting. Step 3 — But then a new question emerges: 'Does the colour of the container affect how fast the ice melts?' Step 4 — New experiment: test black vs white containers in the sun. Step 5 — Result: ice in the black container melts faster! Step 6 — Another new question: 'Why does colour affect heat absorption?' And so the cycle continues — each experiment generates new, deeper questions. This is the iterative, ever-evolving nature of science.\n\nERROR ALERT: A common misconception among students is that a 'failed' experiment — one that does not give the expected result — is a waste of time or a mistake. In reality, unexpected results are often the most valuable outcomes in science. Many of the greatest discoveries in history happened because a scientist paid attention to an unexpected experimental result rather than ignoring it.",
+              "media_intent": [
+                {
+                  "media_id": "M3.S7.T15.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "The Iterative Science Cycle: Each Answer Opens New Questions",
+                  "intent_description": "A circular spiral diagram (not a simple loop, but a spiral that grows outward) showing the iterative science cycle: Observe → Question → Experiment → Answer → New Questions → (spiral expands outward to more experiments and deeper questions). At the centre is a small icon of an ice cube in sunlight — the worked example. The outward spiral visually suggests that science grows and deepens with each iteration.",
+                  "pedagogical_purpose": "Provides a memorable visual metaphor for the iterative nature of science. The spiral format (rather than a simple circle) captures the key idea that each cycle leads to deeper, more expansive questions — directly serving both understand-level objectives.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M3.S7.T15.O2"
+                },
+                {
+                  "media_id": "M3.S7.T15.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "The Ice Melting Experiment: From One Question to Many",
+                  "intent_description": "A step-by-step strip showing six panels: (1) student places ice in sun and shade, (2) sun ice melts faster — confirmed!, (3) new question bubble: 'Does container colour matter?', (4) black vs white container test, (5) black container result — ice melts faster!, (6) new question bubble: 'Why does colour affect heat?' Each panel connects with a right-arrow showing progression from one step to the next.",
+                  "pedagogical_purpose": "Converts the worked-through iterative science example from the text into a sequential visual narrative. Students can follow the experiment step-by-step and see how new questions emerge — making the abstract concept of iterative science concrete.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M3.S7.T15.O1"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            }
+          ]
+        },
+        {
+          "segment_id": "M3.S8",
+          "segment_name": "Happy Exploring — Section 1.1",
+          "topics": [
+            {
+              "topic_id": "M3.S8.T16",
+              "topic_name": "The Art of Asking Scientific Questions",
+              "topic_type": "CONCEPT",
+              "learning_objectives": [
+                {
+                  "objective_id": "M3.S8.T16.O1",
+                  "objective_text": "Explain why asking creative and curious questions is a core scientific skill",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M3.S8.T16.O2",
+                  "objective_text": "Identify the difference between closed, obvious questions and open, imaginative scientific questions",
+                  "bloom_level": "understand"
+                }
+              ],
+              "original_chunk": "1.1 Happy Exploring!\n\nActivity 1.1: Question the Answer\n\nIn school or during tests, you're usually given questions and expected to find the answers. But let's turn that around! To think like a scientist, it is equally important to ask interesting questions! Great scientists don't just answer questions — they ask amazing ones! (Remember last year we had said, \"To be a wise person, you must be a whys person\".)",
+              "modified_chunk": "HOOK: In school tests, you are given a question and asked to find the answer. But what if someone gave you the answer and asked you to come up with the question? Could you do it? Great scientists do this all the time!\n\nRECALL: Throughout this chapter, we have seen that science is a process of questioning. We know that curiosity is a core scientific attitude. Now we look more closely at the specific skill of asking good questions — and why it matters.\n\nCORE: In school or during tests, you are usually given questions and expected to find the answers. But let us turn that around! To think like a scientist, it is equally important to ask interesting questions. Great scientists do not just answer questions — they ask amazing ones. As we said last year, to be a wise person, you must be a 'whys' person.\n\nVISUAL BRIDGE: Imagine two students looking at the same rainbow after a monsoon shower. Student A says, 'Oh, it's a rainbow,' and moves on. Student B asks, 'Why does the sky have exactly seven colours? Why is red always on top? What would happen if I saw a rainbow from an aeroplane?' Student B is thinking like a scientist. The rainbow is the same — but curiosity transforms it into a source of unlimited scientific questions.\n\nWORK-THROUGH: Here is how the skill of asking good questions works in practice. Suppose someone tells you: 'The candle flame goes out when you cover it with a glass.' A closed question: 'Did the candle go out?' — obvious, boring, already answered. An open, scientific question: 'What is inside the air that keeps a flame burning? What happens to that substance as the flame burns? How long does the flame survive in different sized glasses? Could we design a flame that burns without air?' The same observation generates a whole family of deeper, more imaginative questions when you practise the art of asking creatively.\n\nERROR ALERT: Students sometimes think that a 'good question' in science must be very complex or use big vocabulary. This is not true. The best scientific questions are often simple, direct, and deeply curious — like 'Why is the sky blue?' or 'Why does ice float on water?' The quality of a question in science is measured by how much it opens up for exploration, not by how complicated it sounds.",
+              "media_intent": [
+                {
+                  "media_id": "M3.S8.T16.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Two Students, One Rainbow: Closed vs Open Scientific Thinking",
+                  "intent_description": "A split-panel illustration showing two students standing under the same rainbow. Student A's thought bubble shows just 'It's a rainbow.' Student B's thought bubble shows a branching web of questions: 'Why 7 colours?', 'Why red on top?', 'Can I see a double rainbow?', 'What if I was in a plane?' — each question branching into more questions. Labels below read: 'Closed thinking' and 'Scientific thinking'.",
+                  "pedagogical_purpose": "Makes the distinction between closed and open scientific questioning immediately visible through a side-by-side comparison. The rainbow scenario from the text becomes a concrete visual anchor for the difference between passive observation and active scientific curiosity.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M3.S8.T16.O2"
+                },
+                {
+                  "media_id": "M3.S8.T16.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "The 'Whys' Person: What Makes a Good Scientific Question?",
+                  "intent_description": "An infographic showing three quality levels of questions about the same observation ('The candle went out under a glass'): Level 1 — Obvious/closed: 'Did the candle go out?' Level 2 — Better: 'Why did the candle go out?' Level 3 — Scientific: 'What substance in air keeps a flame alive? Does a bigger glass give more time? Could we measure it?' The levels are shown as ascending steps with the textbook quote 'To be a wise person, you must be a whys person' at the top.",
+                  "pedagogical_purpose": "Provides a structured framework for understanding question quality in science — directly serving the explain-level objective. The candle example from the text makes this concrete, and the level system gives students a self-assessment tool for their own questions.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M3.S8.T16.O1"
+                }
+              ],
+              "available_media_types": [
+                "image"
+              ]
+            },
+            {
+              "topic_id": "M3.S8.T17",
+              "topic_name": "Activity 1.1 — Question the Answer",
+              "topic_type": "INTERACTIVE",
+              "learning_objectives": [
+                {
+                  "objective_id": "M3.S8.T17.O1",
+                  "objective_text": "Design creative, open-ended questions for given answers to practise reverse scientific thinking",
+                  "bloom_level": "apply"
+                },
+                {
+                  "objective_id": "M3.S8.T17.O2",
+                  "objective_text": "Predict multiple different contexts or situations that could lead to the same answer",
+                  "bloom_level": "apply"
+                }
+              ],
+              "original_chunk": "Look at the answers below. Your task is to come up with a curious, creative, and fun question or situations that could lead to these answers. There are never any wrong questions, so let your imagination run wild! Since such exercises might not be very familiar, here is an example to help you! Suppose the answer was 'just make it half!' — what all could this be a response to? Well, it could range from \"How do we ensure getting equal shares of cake?\" to \"My essay is too long\", or \"I cannot fit this in the envelope\" or even \"I cannot dance to such a long song\"... all very different! So, let's see what kind of creative questions you can ask!\n\n(Please ask a more interesting, and not obvious questions like \"What is 32+10?\", or even \"What is the answer to life, the universe, and everything?\")\n\nAnswer: Because the cat's teeth were crooked.\nQuestion: ________________________________________________?\n\nAnswer: Just add some milk.\nQuestion: ________________________________________________?\n\nAnswer: Don't panic, I have my towel.\nQuestion: ________________________________________________?\n\nAnswer: 42\nQuestion: ________________________________________________?",
+              "modified_chunk": "HOOK: Can you think backwards? You are given an answer — now you have to invent the question. Ready? This is Activity 1.1, and it is one of the most creative exercises in this chapter!\n\nRECALL: We just learned that asking good questions is a core scientific skill. We know that great scientists ask amazing questions. Now we practise this skill ourselves — by starting from the answer and working our way backwards to the question.\n\nCORE: Look at the answers provided in Activity 1.1. Your task is to come up with a curious, creative, and fun question or situation that could lead to each answer. There are never any wrong questions, so let your imagination run wild! An example to guide you: if the answer is 'Just make it half!' — this could be the answer to 'How do we share cake equally?', or 'My essay is too long!', or 'I cannot fit this in the envelope' — all very different questions leading to the same answer.\n\nVISUAL BRIDGE: Think of it like a treasure hunt in reverse. Normally, the clue leads you to the treasure. In this activity, you are given the treasure — the answer — and you must imagine what clue (question) could have led someone there. Just as there are many paths through a forest to reach the same river, many different questions can lead to the same answer.\n\nWORK-THROUGH: Let us walk through one of the activity's answers together: 'Just add some milk.' Obvious question: 'What is 2 + milk?' — not interesting! Now think creatively: 'My tea is too strong and bitter — what should I do?' Answer: Just add some milk! Or: 'The kheer has become too thick and is sticking to the bottom of the pot — what can I do?' Answer: Just add some milk! Or a biology question: 'What do mammal babies drink for their first nutrition?' Answer: Just add some milk! The same answer emerges from three completely different contexts — a kitchen problem, a cooking accident, and a biology fact. This is exactly the kind of creative, multi-directional thinking that good scientists practise.\n\nERROR ALERT: Some students worry about giving a 'wrong' question. In this activity, almost no question is wrong — the only weak questions are the obvious ones (like 'What is the answer to an arithmetic problem?') that show no creativity or imagination. The goal is not to find one correct question but to explore as many different possible questions as you can think of. Breadth and creativity are the measures of success here.",
+              "media_intent": [
+                {
+                  "media_id": "M3.S8.T17.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Many Questions, One Answer: The Reverse Thinking Map",
+                  "intent_description": "A radial diagram with 'Just add some milk.' in a central box. Five or six branches radiate outward, each showing a different question that leads to the same answer: 'My tea is too strong?', 'The kheer is too thick?', 'What do mammal babies drink?', 'My porridge is dry?', 'My batter is too stiff?'. The visual form of a radial map emphasises that one answer has many possible questions from completely different domains.",
+                  "pedagogical_purpose": "Visually demonstrates the worked example from the text — that a single answer can emerge from very different questions. This primes students for the interactive activity by showing concretely what creative reverse thinking looks like.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M3.S8.T17.O2"
+                },
+                {
+                  "media_id": "M3.S8.T17.MI2",
+                  "type": "2d_tool",
+                  "priority": 1,
+                  "title": "Activity 1.1 Interactive: Question the Answer",
+                  "intent_description": "An interactive digital version of Activity 1.1 from the textbook. Students see one answer card at a time (e.g., 'Because the cat's teeth were crooked', 'Just add some milk', 'Don't panic, I have my towel', '42'). They type their creative questions into a text box. After submitting, example responses are revealed — showing 3–4 sample creative questions for each answer from different domains (everyday life, science, humour). Students can compare their questions to the examples.",
+                  "pedagogical_purpose": "Transforms the textbook's paper-based activity into an interactive digital experience. The reveal mechanic (student types first, then sees examples) encourages independent creative thinking before providing scaffolding. Directly serves both apply-level objectives.",
+                  "linked_objective_id": "M3.S8.T17.O1"
+                },
+                {
+                  "media_id": "M3.S8.T17.MI3",
+                  "type": "video",
+                  "priority": 3,
+                  "title": "How Scientists Ask Questions in Reverse: Real Examples",
+                  "intent_description": "A short animated video (2 min) showing how real scientists often start from an observation (an answer) and work backwards to frame a question. Examples include: Fleming noticing a mould killing bacteria (observation) → 'What is this mould doing?' (question) → penicillin. The video frames reverse thinking as a real scientific habit, not just a classroom game.",
+                  "pedagogical_purpose": "Provides real-world scientific context for the reverse questioning activity. For students who complete the activity quickly or need deeper engagement, this video shows that the skill practised in Activity 1.1 is genuinely used in scientific discovery.",
+                  "linked_objective_id": "M3.S8.T17.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "2d_tool",
+                "video"
+              ]
+            },
+            {
+              "topic_id": "M3.S8.T18",
+              "topic_name": "Chapter Review — The Ever-Evolving World of Science",
+              "topic_type": "REVIEW",
+              "learning_objectives": [
+                {
+                  "objective_id": "M3.S8.T18.O1",
+                  "objective_text": "Summarise the key ideas introduced in Chapter 1: science as a process, interconnected fields, and the value of questioning",
+                  "bloom_level": "understand"
+                },
+                {
+                  "objective_id": "M3.S8.T18.O2",
+                  "objective_text": "Identify the major topic areas students will explore throughout Grade 7 science",
+                  "bloom_level": "remember"
+                }
+              ],
+              "original_chunk": "Chapter 1: The Ever-Evolving World of Science — Chapter Review. This chapter introduced science as a process of questioning, observing, and exploring. It previewed the major topics of Grade 7: properties of materials, reversible and irreversible changes, heat and the water cycle, body changes during adolescence, essential life processes, plant nutrition, measurement of time, light and shadows, and movements of the Earth, Moon, and Sun. The chapter concluded with Section 1.1 and Activity 1.1 — Question the Answer — encouraging students to practise the art of asking creative, open-ended scientific questions.",
+              "modified_chunk": "HOOK: Let us see how everything we have explored in Chapter 1 connects — from a paper plane in the corridor to eclipses in the sky, from haldi stains in the kitchen to the beating of your heart.\n\nRECALL: We began this chapter with science as a way of thinking and ended with the skill of asking creative questions. Along the way, we previewed everything you will study in Grade 7 Science — materials, changes, life processes, time, light, and the universe.\n\nCORE: Chapter 1, 'The Ever-Evolving World of Science', is an overview and an invitation. It introduces science as a process of questioning, observing, and exploring — not a fixed collection of facts. It previews all the major topic areas: properties and classification of materials, reversible and irreversible changes, heat and the water cycle, adolescence and life processes, plant nutrition, time and speed, light and shadows, Earth-Moon-Sun movements, and the skill of scientific questioning.\n\nVISUAL BRIDGE: Think of Chapter 1 as the index map you see at the beginning of a long trek. It shows you all the trails, the rivers, the peaks, and the forests you will explore over the year. Each trail is a chapter in the textbook. Right now, you are standing at the starting point, map in hand — and the entire Grade 7 Science journey is spread out before you. Every topic you just previewed is a destination waiting to be explored in depth.\n\nWORK-THROUGH: Let us connect the key ideas across the chapter to see how they fit together. Science is a way of thinking (T1) that requires curiosity and questioning (T2) and a sense of responsibility towards the environment (T3). It cuts across interconnected branches — physics, chemistry, biology, earth sciences (T4). These branches bring us questions about materials (T5, T6), changes (T7, T8), life in living things (T9, T10, T11), the measurement of time, light, and cosmic movements (T12, T13, T14). Experiments generate more questions, not just answers (T15). And the best scientists are those who ask the most imaginative questions (T16, T17). Together, these ideas define what it means to be a young scientist at the start of Grade 7.\n\nERROR ALERT: Students sometimes think of a review chapter like this as a 'light' or 'easy' chapter that can be skipped or speed-read. In fact, Chapter 1 builds the entire scientific mindset that all subsequent chapters depend on. The ideas here — curiosity, questioning, interconnection, responsibility, and the iterative nature of science — are not just introductory. They are the foundation on which everything else in Grade 7 Science is built.",
+              "media_intent": [
+                {
+                  "media_id": "M3.S8.T18.MI1",
+                  "type": "image",
+                  "priority": 1,
+                  "title": "Chapter 1 Map: The Grade 7 Science Journey Ahead",
+                  "intent_description": "A visual 'trek map' of the Grade 7 Science journey. A central starting point is labelled 'Chapter 1: The Ever-Evolving World of Science'. From it, eight paths radiate outward, each labelled with a major topic area: Materials & Properties, Metals & Non-Metals, Reversible/Irreversible Changes, Heat & Water Cycle, Adolescence & Life Processes, Plant Nutrition, Time & Motion, Light & the Universe. Each path ends in a small icon representing that topic. The whole image feels like a map of adventures ahead.",
+                  "pedagogical_purpose": "Provides a memorable overview visual that students can return to throughout the year. Directly serves the remember-level objective of identifying major topic areas. The map metaphor reinforces the chapter's framing of science as an exploration.",
+                  "image_category": "textbook_reference",
+                  "linked_objective_id": "M3.S8.T18.O2"
+                },
+                {
+                  "media_id": "M3.S8.T18.MI2",
+                  "type": "image",
+                  "priority": 2,
+                  "title": "The Three Big Ideas of Chapter 1",
+                  "intent_description": "A clean three-pillar infographic. Each pillar shows one big idea from Chapter 1: Pillar 1 — 'Science is a Way of Thinking' (icon: a thinking child with a question mark), Pillar 2 — 'All Branches of Science are Connected' (icon: the banyan tree from T4), Pillar 3 — 'Questions are as Important as Answers' (icon: an open question mark transforming into a lightbulb). Below all three pillars: 'These three ideas are the foundation of everything you will learn in Grade 7 Science.'",
+                  "pedagogical_purpose": "Consolidates the three core conceptual ideas from the chapter into a single visual summary. Supports the summarise-level objective and provides a review scaffold that students can use for self-checking before or after formal assessment.",
+                  "image_category": "example_based",
+                  "linked_objective_id": "M3.S8.T18.O1"
+                },
+                {
+                  "media_id": "M3.S8.T18.MI3",
+                  "type": "2d_tool",
+                  "priority": 2,
+                  "title": "Chapter 1 Concept Map: Connect the Topics",
+                  "intent_description": "An interactive concept-mapping activity where students are given 12–14 labelled nodes (one per major topic from the chapter) and asked to drag connecting arrows between nodes that are related. For example, 'Science as a Way of Thinking' → 'Curiosity and Questioning' → 'Activity 1.1'. Students can label their arrows with short phrases. After completing, a suggested completed map is revealed for comparison.",
+                  "pedagogical_purpose": "Actively engages students in making connections between the 18 topics of the chapter — serving the summarise-level objective through a construct activity rather than passive recall. The comparison to a model map provides self-assessment.",
+                  "linked_objective_id": "M3.S8.T18.O1"
+                }
+              ],
+              "available_media_types": [
+                "image",
+                "2d_tool"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
