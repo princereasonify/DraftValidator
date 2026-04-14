@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import rawData from '../data/draftPlan.json';
-import { resequenceAll } from '../utils/resequencing';
 import { validatePlan } from '../utils/validation';
 import { saveDraftedPlanVersion } from '../api';
 import SplitTopicModal from './SplitTopicModal';
@@ -12,6 +11,22 @@ import AddItemModal from './AddItemModal';
 import ValidationPanel from './ValidationPanel';
 import VersionHistoryPanel from './VersionHistoryPanel';
 import './DraftPlanView.css';
+
+/* ── Diff helpers (feedback-resolver view) ──────────── */
+function diffClass(node) {
+  const s = node?.__diff?.status;
+  if (!s || s === 'unchanged') return '';
+  return ` dv-diff dv-diff--${s}`;
+}
+function DiffBadge({ diff }) {
+  const s = diff?.status;
+  if (!s || s === 'unchanged') return null;
+  const label = s === 'added' ? 'NEW' : s === 'deleted' ? 'DELETED' : 'EDITED';
+  return <span className={`dv-diff-badge dv-diff-badge--${s}`}>{label}</span>;
+}
+function fieldClass(topic, field) {
+  return topic?.__diff?.status === 'modified' && topic?.__diff?.fields?.[field] ? ' dv-diff-field' : '';
+}
 
 /* ── Constants ───────────────────────────────────────── */
 const TOPIC_TYPES_SCIENCE = ['CONCEPT', 'EXPERIMENT', 'PRACTICE', 'INTERACTIVE', 'REVIEW'];
@@ -25,24 +40,43 @@ const BLOOM_COLORS = {
   create:     { bg: '#FFF7ED', text: '#7C2D12' },
 };
 
-/* ── Helper: resequence + create version snapshot ─────── */
+/* ── Helper: take a version snapshot (no ID renumbering — preserve input shape) ─── */
 function withResequence(state, summary, createSnapshot = true) {
-  const { newData } = resequenceAll(state);
   const versions = createSnapshot
     ? [...(state._versions || []).slice(-19), {
         version: (state._versions?.length || 0) + 1,
         timestamp: new Date().toISOString(),
         summary,
-        data: JSON.parse(JSON.stringify(newData)),
+        data: JSON.parse(JSON.stringify(state)),
         stats: (() => {
           let m = 0, s = 0, t = 0;
-          (newData.modules || []).forEach(mod => { m++; (mod.segments || []).forEach(seg => { s++; (seg.topics || []).forEach(() => t++); }); });
+          (state.modules || []).forEach(mod => { m++; (mod.segments || []).forEach(seg => { s++; (seg.topics || []).forEach(() => t++); }); });
           return { modules: m, segments: s, topics: t };
         })(),
       }]
     : (state._versions || []);
-  return { ...newData, _versions: versions };
+  return { ...state, _versions: versions };
 }
+
+/* ── Unique-ID helpers: max numeric suffix + 1 so deletes never cause collisions ─── */
+function maxNum(ids, re) {
+  let max = 0;
+  for (const id of ids) {
+    if (!id) continue;
+    const m = re.exec(id);
+    if (m) { const n = parseInt(m[1], 10); if (n > max) max = n; }
+  }
+  return max;
+}
+function allModuleIds(state) { return (state.modules || []).map(m => m.module_id); }
+function allSegmentIds(state) { return (state.modules || []).flatMap(m => (m.segments || []).map(s => s.segment_id)); }
+function allTopicIds(state) { return (state.modules || []).flatMap(m => (m.segments || []).flatMap(s => (s.topics || []).map(t => t.topic_id))); }
+function nextModuleId(state) { return `M${maxNum(allModuleIds(state), /^M(\d+)$/) + 1}`; }
+function nextSegmentId(state, moduleId) { return `${moduleId}.S${maxNum(allSegmentIds(state), /\.S(\d+)$/) + 1}`; }
+function nextTopicId(state, segmentId) { return `${segmentId}.T${maxNum(allTopicIds(state), /\.T(\d+)$/) + 1}`; }
+function nextObjectiveId(topic) { return `${topic.topic_id}.O${maxNum((topic.learning_objectives || []).map(o => o.objective_id), /\.O(\d+)$/) + 1}`; }
+function nextMediaId(topic) { return `${topic.topic_id}.MI${maxNum((topic.media_intent || []).map(mi => mi.media_id), /\.MI(\d+)$/) + 1}`; }
+function nextExampleIdFor(state) { return `EX${maxNum((state.example_plan || []).map(e => e.example_id), /^EX(\d+)$/) + 1}`; }
 
 /* ── Reducer ─────────────────────────────────────────── */
 function reducer(state, action) {
@@ -63,25 +97,27 @@ function reducer(state, action) {
 
     /* ─ Add operations (resequence) ─ */
     case 'ADD_MODULE': {
-      const newMod = { module_id: `M${(state.modules || []).length + 1}`, module_name: action.name, segments: [] };
+      const newMod = { module_id: nextModuleId(state), module_name: action.name, segments: [] };
       const next = { ...state, modules: [...(state.modules || []), newMod] };
       return withResequence(next, `Added module "${action.name}"`);
     }
 
     case 'ADD_SEGMENT': {
+      const newSegId = nextSegmentId(state, action.moduleId);
       const modules = (state.modules || []).map(m => {
         if (m.module_id !== action.moduleId) return m;
-        const newSeg = { segment_id: `${m.module_id}.S${(m.segments || []).length + 1}`, segment_name: action.name, topics: [] };
+        const newSeg = { segment_id: newSegId, segment_name: action.name, topics: [] };
         return { ...m, segments: [...(m.segments || []), newSeg] };
       });
       return withResequence({ ...state, modules }, `Added segment "${action.name}" to ${action.moduleId}`);
     }
 
     case 'ADD_TOPIC': {
+      const newTopicId = nextTopicId(state, action.segmentId);
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => {
         if (s.segment_id !== action.segmentId) return s;
         const newTopic = {
-          topic_id: `${s.segment_id}.T${(s.topics || []).length + 1}`,
+          topic_id: newTopicId,
           topic_name: action.topic_name,
           topic_type: action.topic_type || 'CONCEPT',
           learning_objectives: [],
@@ -97,28 +133,25 @@ function reducer(state, action) {
 
     case 'ADD_EXAMPLE': {
       const newEx = {
-        example_id: `EX${(state.example_plan || []).length + 1}`,
+        example_id: nextExampleIdFor(state),
         example_theme: action.example_theme,
         example_description: action.example_description,
         scope_level: action.scope_level || 'chapter',
         supported_topic_ids: action.supported_topic_ids || [],
       };
-      const next = { ...state, example_plan: [...(state.example_plan || []), newEx] };
-      const { newData } = resequenceAll(next);
-      return { ...newData, _versions: state._versions || [] };
+      return { ...state, example_plan: [...(state.example_plan || []), newEx] };
     }
 
     /* ─ Objective operations ─ */
     case 'ADD_OBJECTIVE': {
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => ({ ...s, topics: (s.topics || []).map(t => {
         if (t.topic_id !== action.topicId) return t;
-        const objs = [...(t.learning_objectives || [])];
         const newObj = {
-          objective_id: `${t.topic_id}.O${objs.length + 1}`,
+          objective_id: nextObjectiveId(t),
           objective_text: action.objective_text,
           bloom_level: action.bloom_level,
         };
-        return { ...t, learning_objectives: [...objs, newObj] };
+        return { ...t, learning_objectives: [...(t.learning_objectives || []), newObj] };
       }) })) }));
       return { ...state, modules };
     }
@@ -135,20 +168,11 @@ function reducer(state, action) {
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => ({ ...s, topics: (s.topics || []).map(t => {
         if (t.topic_id !== action.topicId) return t;
         const objs = (t.learning_objectives || []).filter(o => o.objective_id !== action.objectiveId);
-        // Resequence objectives within topic and fix media links
-        let oNum = 0;
-        const idMap = {};
-        const reseqObjs = objs.map(o => {
-          oNum++;
-          const newId = `${t.topic_id}.O${oNum}`;
-          idMap[o.objective_id] = newId;
-          return { ...o, objective_id: newId };
-        });
-        const reseqMedia = (t.media_intent || []).map(mi => ({
-          ...mi,
-          linked_objective_id: mi.linked_objective_id ? (idMap[mi.linked_objective_id] || '') : '',
-        }));
-        return { ...t, learning_objectives: reseqObjs, media_intent: reseqMedia };
+        // Only clear media links that referenced the removed objective — preserve all other IDs.
+        const cleanedMedia = (t.media_intent || []).map(mi => (
+          mi.linked_objective_id === action.objectiveId ? { ...mi, linked_objective_id: '' } : mi
+        ));
+        return { ...t, learning_objectives: objs, media_intent: cleanedMedia };
       }) })) }));
       return { ...state, modules };
     }
@@ -157,9 +181,8 @@ function reducer(state, action) {
     case 'ADD_MEDIA': {
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => ({ ...s, topics: (s.topics || []).map(t => {
         if (t.topic_id !== action.topicId) return t;
-        const media = [...(t.media_intent || [])];
-        const newMi = { ...action.media, media_id: `${t.topic_id}.MI${media.length + 1}` };
-        const updated = [...media, newMi];
+        const newMi = { ...action.media, media_id: nextMediaId(t) };
+        const updated = [...(t.media_intent || []), newMi];
         return { ...t, media_intent: updated, available_media_types: [...new Set(updated.map(m => m.type))] };
       }) })) }));
       return { ...state, modules };
@@ -178,10 +201,7 @@ function reducer(state, action) {
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => ({ ...s, topics: (s.topics || []).map(t => {
         if (t.topic_id !== action.topicId) return t;
         const updated = (t.media_intent || []).filter(mi => mi.media_id !== action.mediaId);
-        // Resequence media IDs within topic
-        let miNum = 0;
-        const reseq = updated.map(mi => { miNum++; return { ...mi, media_id: `${t.topic_id}.MI${miNum}` }; });
-        return { ...t, media_intent: reseq, available_media_types: [...new Set(reseq.map(m => m.type))] };
+        return { ...t, media_intent: updated, available_media_types: [...new Set(updated.map(m => m.type))] };
       }) })) }));
       return { ...state, modules };
     }
@@ -220,8 +240,7 @@ function reducer(state, action) {
 
     case 'DELETE_EXAMPLE': {
       const example_plan = (state.example_plan || []).filter(ex => ex.example_id !== action.exId);
-      const { newData } = resequenceAll({ ...state, example_plan });
-      return { ...newData, _versions: state._versions || [] };
+      return { ...state, example_plan };
     }
 
     /* ─ Reorder (resequence) ─ */
@@ -317,12 +336,19 @@ function reducer(state, action) {
     /* ─ Split topic ─ */
     case 'SPLIT_TOPIC': {
       const { topicId, nameA, nameB, modifiedA, modifiedB, originalA, originalB, objectivesA, objectivesB, mediaA, mediaB } = action;
+      // Find the segment the topic lives in so the new sibling is nested under the same segment.
+      let parentSegId = null;
+      (state.modules || []).forEach(m => (m.segments || []).forEach(s => {
+        if ((s.topics || []).some(t => t.topic_id === topicId)) parentSegId = s.segment_id;
+      }));
+      if (!parentSegId) return state;
+      const newBId = nextTopicId(state, parentSegId);
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => {
         const idx = (s.topics || []).findIndex(t => t.topic_id === topicId);
         if (idx === -1) return s;
         const topic = s.topics[idx];
         const topicA = { ...topic, topic_name: nameA, modified_chunk: modifiedA, original_chunk: originalA, learning_objectives: objectivesA, media_intent: mediaA, available_media_types: [...new Set(mediaA.map(m => m.type))] };
-        const topicB = { ...topic, topic_id: topicId + '_b', topic_name: nameB, modified_chunk: modifiedB, original_chunk: originalB, learning_objectives: objectivesB, media_intent: mediaB, available_media_types: [...new Set(mediaB.map(m => m.type))] };
+        const topicB = { ...topic, topic_id: newBId, topic_name: nameB, modified_chunk: modifiedB, original_chunk: originalB, learning_objectives: objectivesB, media_intent: mediaB, available_media_types: [...new Set(mediaB.map(m => m.type))] };
         const topics = [...s.topics]; topics.splice(idx, 1, topicA, topicB);
         return { ...s, topics };
       }) }));
@@ -451,7 +477,7 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
   };
 
   return (
-    <div className={`topic-card${dragging ? ' topic-card--dragging' : ''}`} draggable onDragStart={handleDragStart} onDragEnd={() => setDragging(false)}>
+    <div className={`topic-card${dragging ? ' topic-card--dragging' : ''}${diffClass(topic)}`} draggable onDragStart={handleDragStart} onDragEnd={() => setDragging(false)}>
       {/* Header */}
       <div className="topic-card__header">
         <div className="topic-card__drag-handle" title="Drag to reorder">
@@ -459,6 +485,7 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
         </div>
         <div className="topic-card__meta">
           <code className="topic-card__id">{topic.topic_id}</code>
+          <DiffBadge diff={topic.__diff} />
           {/* Type dropdown */}
           <div className="topic-type-dropdown">
             <button className={`topic-type-badge topic-type-badge--${(topic.topic_type||'').toLowerCase()}`} onClick={() => setEditTypeOpen(v => !v)}>
@@ -475,8 +502,11 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
             )}
           </div>
         </div>
-        <div className="topic-card__name-wrap">
+        <div className={`topic-card__name-wrap${fieldClass(topic, 'topic_name')}`}>
           <InlineEdit className="topic-card__name" value={topic.topic_name} onSave={v => dispatch({ type: 'UPDATE_TOPIC', topicId: topic.topic_id, patch: { topic_name: v } })} />
+          {topic.__diff?.fields?.topic_name?.old && topic.__diff.fields.topic_name.old !== topic.topic_name && (
+            <div className="dv-diff-old" title="Previous name">was: <s>{topic.__diff.fields.topic_name.old}</s></div>
+          )}
         </div>
         <div className="topic-card__actions">
           <button className="icon-btn icon-btn--muted" onClick={() => dispatch({ type: 'MOVE_TOPIC_UP', topicId: topic.topic_id })} disabled={topicIndex === 0} title="Move up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
@@ -510,11 +540,16 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
       {expanded && (
         <div className="topic-card__body">
           {/* Objectives */}
-          <div className="topic-section">
+          <div className={`topic-section${fieldClass(topic, 'learning_objectives')}`}>
             <div className="topic-section__label-row">
               <div className="topic-section__label">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
                 Learning Objectives ({(topic.learning_objectives || []).length})
+                {topic.__diff?.fields?.learning_objectives && (
+                  <span className="dv-diff-inline-tag">
+                    {topic.__diff.fields.learning_objectives.old} → {topic.__diff.fields.learning_objectives.new}
+                  </span>
+                )}
               </div>
               <button className="add-inline-btn" onClick={() => setObjModal('add')}>
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add
@@ -544,10 +579,11 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
           {/* Content chunks — side by side */}
           <div className="chunk-columns">
             {/* Modified chunk */}
-            <div className="chunk-col">
+            <div className={`chunk-col${fieldClass(topic, 'modified_chunk')}`}>
               <div className="chunk-col__label chunk-col__label--modified">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 Modified Chunk
+                {topic.__diff?.fields?.modified_chunk && <span className="dv-diff-inline-tag">edited</span>}
               </div>
               <textarea
                 className="chunk-textarea"
@@ -555,12 +591,19 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
                 onChange={e => dispatch({ type: 'UPDATE_TOPIC', topicId: topic.topic_id, patch: { modified_chunk: e.target.value } })}
                 placeholder="Modified teaching content (HOOK / RECALL / CORE / VISUAL BRIDGE / WORK-THROUGH / ERROR ALERT)…"
               />
+              {topic.__diff?.fields?.modified_chunk?.old && (
+                <details className="dv-diff-prev">
+                  <summary>Show previous text</summary>
+                  <pre className="dv-diff-prev__text">{topic.__diff.fields.modified_chunk.old}</pre>
+                </details>
+              )}
             </div>
             {/* Original chunk */}
-            <div className="chunk-col">
+            <div className={`chunk-col${fieldClass(topic, 'original_chunk')}`}>
               <div className="chunk-col__label chunk-col__label--original">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
                 Original Chunk
+                {topic.__diff?.fields?.original_chunk && <span className="dv-diff-inline-tag">edited</span>}
               </div>
               <textarea
                 className="chunk-textarea chunk-textarea--original"
@@ -572,11 +615,16 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
           </div>
 
           {/* Media Intent */}
-          <div className="topic-section">
+          <div className={`topic-section${fieldClass(topic, 'media_intent')}`}>
             <div className="topic-section__label-row">
               <div className="topic-section__label">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 Media Intent ({(topic.media_intent || []).length})
+                {topic.__diff?.fields?.media_intent && (
+                  <span className="dv-diff-inline-tag">
+                    {topic.__diff.fields.media_intent.old} → {topic.__diff.fields.media_intent.new}
+                  </span>
+                )}
               </div>
               <button className="add-inline-btn" onClick={() => setMediaModal('add')}>
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add
@@ -711,7 +759,7 @@ function SegmentBlock({ segment, segIdx, totalSegs, dispatch, data, onSplit, onM
   const topics = segment.topics || [];
 
   return (
-    <div className="segment-block">
+    <div className={`segment-block${diffClass(segment)}`}>
       <div className="segment-header">
         <div className="segment-header__left">
           <button className={`segment-collapse-btn${collapsed ? ' segment-collapse-btn--collapsed' : ''}`} onClick={() => setCollapsed(v => !v)}>
@@ -719,6 +767,7 @@ function SegmentBlock({ segment, segIdx, totalSegs, dispatch, data, onSplit, onM
           </button>
           <code className="segment-id">{segment.segment_id}</code>
           <InlineEdit className="segment-name" value={segment.segment_name} onSave={v => dispatch({ type: 'UPDATE_SEGMENT', segmentId: segment.segment_id, patch: { segment_name: v } })} />
+          <DiffBadge diff={segment.__diff} />
           <span className="segment-count">{topics.length} topic{topics.length !== 1 ? 's' : ''}</span>
         </div>
         <div className="segment-header__right">
@@ -777,7 +826,7 @@ function ModuleBlock({ module, modIdx, totalMods, dispatch, data, onSplit, onMer
   const topicCount = segments.reduce((a, s) => a + (s.topics || []).length, 0);
 
   return (
-    <div className="module-block">
+    <div className={`module-block${diffClass(module)}`}>
       <div className="module-header">
         <div className="module-header__left">
           <button className={`module-collapse-btn${collapsed ? ' module-collapse-btn--collapsed' : ''}`} onClick={() => setCollapsed(v => !v)}>
@@ -785,6 +834,7 @@ function ModuleBlock({ module, modIdx, totalMods, dispatch, data, onSplit, onMer
           </button>
           <span className="module-number">M{modIdx + 1}</span>
           <InlineEdit className="module-name" value={module.module_name} onSave={v => dispatch({ type: 'UPDATE_MODULE', moduleId: module.module_id, patch: { module_name: v } })} />
+          <DiffBadge diff={module.__diff} />
         </div>
         <div className="module-header__stats">
           <span className="module-stat">{segments.length} seg{segments.length !== 1 ? 's' : ''}</span>
@@ -880,8 +930,11 @@ function useUndoReducer(initialState) {
 }
 
 /* ── Main DraftPlanView ──────────────────────────────── */
-export default function DraftPlanView({ initialData, chapterId, schoolId, canSave = false }) {
-  const seed = initialData ? { ...resequenceAll(initialData).newData, _versions: [] } : { ...rawData, _versions: [] };
+export default function DraftPlanView({ initialData, chapterId, schoolId, canSave = false, onSaved }) {
+  // Preserve incoming JSON structure verbatim — only resequence when the user performs
+  // structural operations (add/move/delete) that actually need renumbering. This keeps
+  // the saved plan byte-identical to the source except for the user's edits.
+  const seed = initialData ? { ...initialData, _versions: [] } : { ...rawData, _versions: [] };
   const [data, dispatch, { undo, redo, canUndo, canRedo }] = useUndoReducer(seed);
   const [splitModal, setSplitModal] = useState(null);
   const [mergeModal, setMergeModal] = useState(null);
@@ -971,12 +1024,13 @@ export default function DraftPlanView({ initialData, chapterId, schoolId, canSav
       delete payload._versions;
       const res = await saveDraftedPlanVersion({ chapterId, schoolId, draftedPlanJson: payload });
       setSaveMsg({ type: 'success', text: `Saved as version ${res?.version ?? 'new'}.` });
+      if (typeof res?.version === 'number' && onSaved) onSaved(res.version);
     } catch (err) {
       setSaveMsg({ type: 'error', text: err?.message || 'Failed to save.' });
     } finally {
       setSaving(false);
     }
-  }, [data, chapterId, schoolId]);
+  }, [data, chapterId, schoolId, onSaved]);
 
   useEffect(() => {
     if (!saveMsg) return;

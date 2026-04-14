@@ -991,3 +991,87 @@
   background: var(--clr-primary-bg);
   border-radius: var(--radius-md);
 }
+
+/* ── Diff overlays (feedback-resolver read-only view) ── */
+.dv-diff--added { background: #ECFDF5; border-left: 3px solid #10B981; }
+.dv-diff--added > .module-header,
+.dv-diff--added > .segment-header,
+.dv-diff--added > .topic-card__header { background: #D1FAE5; }
+
+.dv-diff--deleted {
+  background: #FEF2F2;
+  border-left: 3px solid #EF4444;
+  opacity: 0.75;
+}
+.dv-diff--deleted > .module-header,
+.dv-diff--deleted > .segment-header,
+.dv-diff--deleted > .topic-card__header { background: #FEE2E2; }
+.dv-diff--deleted .module-name,
+.dv-diff--deleted .segment-name,
+.dv-diff--deleted .topic-card__name,
+.dv-diff--deleted .chunk-textarea,
+.dv-diff--deleted .objective-text { text-decoration: line-through; color: #991B1B; }
+.dv-diff--deleted button,
+.dv-diff--deleted textarea,
+.dv-diff--deleted input,
+.dv-diff--deleted select { pointer-events: none; }
+.dv-diff--deleted textarea { background: #FEF2F2; }
+
+.dv-diff--modified { border-left: 3px solid #F59E0B; }
+
+.dv-diff-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.64rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  margin-left: 6px;
+  text-transform: uppercase;
+}
+.dv-diff-badge--added    { background: #10B981; color: white; }
+.dv-diff-badge--deleted  { background: #EF4444; color: white; }
+.dv-diff-badge--modified { background: #F59E0B; color: #1F2937; }
+
+.dv-diff-field {
+  background: #FFFBEB;
+  border-radius: 6px;
+  padding: 4px 6px;
+}
+.dv-diff-inline-tag {
+  margin-left: 6px;
+  font-size: 0.66rem;
+  font-weight: 600;
+  background: #FEF3C7;
+  color: #92400E;
+  padding: 1px 6px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.dv-diff-old {
+  font-size: 0.72rem;
+  color: #94A3B8;
+  margin-top: 2px;
+}
+.dv-diff-prev {
+  margin-top: 4px;
+  font-size: 0.75rem;
+}
+.dv-diff-prev summary {
+  cursor: pointer;
+  color: #92400E;
+  font-weight: 600;
+}
+.dv-diff-prev__text {
+  margin: 4px 0 0;
+  background: #FEF3C7;
+  color: #78350F;
+  padding: 6px 8px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 0.78rem;
+  text-decoration: line-through;
+}

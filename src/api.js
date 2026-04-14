@@ -23,6 +23,16 @@ export async function apiLogin(email, password) {
   return json.data;
 }
 
+export async function apiLogout() {
+  const res = await fetch(`${BASE}/auth/logout`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || !json.success) throw new Error(json.message || 'Logout failed');
+  return json.data;
+}
+
 export async function getSchoolProfiles() {
   const res = await fetch(`${BASE}/schoolProfile?page=1&pageSize=10000`, { headers: authHeaders() });
   const json = await res.json();
@@ -89,6 +99,27 @@ export async function saveDraftedPlanVersion({ chapterId, schoolId, draftedPlanJ
   });
   const json = await res.json();
   if (!res.ok || !json.success) throw new Error(json.message || 'Failed to save drafted plan');
+  return json.data;
+}
+
+export async function getDraftedPlansForChapter(chapterId, { schoolId } = {}) {
+  const params = new URLSearchParams();
+  if (chapterId) params.set('chapterId', chapterId);
+  if (schoolId != null && String(schoolId) !== '') params.set('schoolId', String(schoolId));
+  const q = params.toString() ? `?${params}` : '';
+  const res = await fetch(`${BASE}/drafted-learning-plan${q}`, { headers: authHeaders() });
+  const json = await res.json();
+  if (!json.success) throw new Error(json.message || 'Failed to load drafted plans');
+  return Array.isArray(json.data) ? json.data : [];
+}
+
+export async function approveDraftedPlan(planId) {
+  const res = await fetch(`${BASE}/drafted-learning-plan/approve/${encodeURIComponent(planId)}`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || !json.success) throw new Error(json.message || 'Failed to approve plan');
   return json.data;
 }
 

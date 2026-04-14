@@ -3,7 +3,8 @@ import PdfViewer from './components/PdfViewer';
 import DraftPlanView from './components/DraftPlanView';
 import LoginPage from './pages/LoginPage';
 import SelectionPage from './pages/SelectionPage';
-import { getTextbookPdfUrl, getAuthToken, getLearningPlanChapter, getDraftedLearningPlanChapter } from './api';
+import FeedbackResolverPage from './pages/FeedbackResolverPage';
+import { getTextbookPdfUrl, getAuthToken, getLearningPlanChapter, getDraftedLearningPlanChapter, apiLogout } from './api';
 import HelpModal from './components/HelpModal';
 import './App.css';
 
@@ -16,12 +17,19 @@ function isEducator(role) {
   return r.includes('educator');
 }
 
+function isFeedbackResolver(role) {
+  if (!role) return false;
+  const r = role.toLowerCase();
+  return r.includes('resolver') || r.includes('feedback');
+}
+
 export default function App() {
   /* ── Auth / routing ────────────────────────────────── */
   const [view, setView] = useState('login'); // 'login' | 'selection' | 'main'
   const [user, setUser] = useState(null);
   const [planMeta, setPlanMeta] = useState(null);   // { subject, grade, chapter, board, medium }
   const [planData, setPlanData] = useState(null);
+  const [planVersion, setPlanVersion] = useState(null);
   const [showHelp, setShowHelp] = useState(false);
 
   /* Restore session on mount */
@@ -30,10 +38,12 @@ export default function App() {
       const saved = JSON.parse(localStorage.getItem('user') || 'null');
       if (saved?.accessToken) {
         setUser(saved);
-        if (isEducator(saved.role)) {
+        if (isFeedbackResolver(saved.role)) {
+          setView('resolver');
+        } else if (isEducator(saved.role)) {
           setView('selection');
         } else {
-          // Non-educator roles: skip straight to main with default data
+          // Other roles: skip straight to main with default data
           setView('main');
         }
       }
@@ -42,7 +52,9 @@ export default function App() {
 
   const handleLogin = useCallback((userData) => {
     setUser(userData);
-    if (isEducator(userData.role)) {
+    if (isFeedbackResolver(userData.role)) {
+      setView('resolver');
+    } else if (isEducator(userData.role)) {
       setView('selection');
     } else {
       setView('main');
@@ -56,6 +68,7 @@ export default function App() {
 
     if (pd) {
       setPlanData(pd);
+      setPlanVersion(null);
       setView('main');
       return;
     }
@@ -72,6 +85,7 @@ export default function App() {
           const raw = drafted.plan.draftedPlanJson;
           const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
           setPlanData(parsed);
+          setPlanVersion(drafted.plan.version ?? null);
           setView('main');
           return;
         }
@@ -81,27 +95,37 @@ export default function App() {
         if (lp?.plan?.planJson) {
           const parsed = typeof lp.plan.planJson === 'string' ? JSON.parse(lp.plan.planJson) : lp.plan.planJson;
           setPlanData(parsed);
+          setPlanVersion(lp.plan.version ?? null);
         } else {
           setPlanData(null);
+          setPlanVersion(null);
         }
       } catch {
         setPlanData(null);
+        setPlanVersion(null);
       } finally {
         setLoadingPlan(false);
       }
     } else {
       setPlanData(null);
+      setPlanVersion(null);
     }
 
     setView('main');
   }, []);
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
+    try { await apiLogout(); } catch { /* proceed with local logout regardless */ }
     localStorage.removeItem('user');
     setUser(null);
     setPlanData(null);
+    setPlanVersion(null);
     setPlanMeta(null);
     setView('login');
+  }, []);
+
+  const handleSaved = useCallback((newVersion) => {
+    if (typeof newVersion === 'number') setPlanVersion(newVersion);
   }, []);
 
   const handleBackToSelection = useCallback(() => {
@@ -148,6 +172,9 @@ export default function App() {
 
   /* ── Non-main views ────────────────────────────────── */
   if (view === 'login') return <LoginPage onLogin={handleLogin} />;
+  if (view === 'resolver') return (
+    <FeedbackResolverPage user={user} onLogout={handleLogout} />
+  );
   if (view === 'selection') return (
     <SelectionPage user={user} onOpen={handleOpen} onLogout={handleLogout} />
   );
@@ -182,7 +209,9 @@ export default function App() {
               Change
             </button>
           )}
-          <span className="app-header__badge app-header__badge--draft">Draft v1</span>
+          <span className="app-header__badge app-header__badge--draft">
+            {planVersion != null ? `Draft v${planVersion}` : 'Draft'}
+          </span>
           <span className="app-header__badge app-header__badge--stage">Review Stage</span>
           <button className="app-header__back-btn" onClick={() => setShowHelp(true)} title="User manual">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -243,6 +272,7 @@ export default function App() {
             chapterId={planMeta?.chapterId}
             schoolId={planMeta?.schoolId}
             canSave={isEducator(user?.role)}
+            onSaved={handleSaved}
           />
         </div>
       </div>
