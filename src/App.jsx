@@ -238,7 +238,12 @@ export default function App() {
 
         {/* Draft Plan Panel */}
         <div className="app-panel app-panel--plan" style={{ width: `${100 - splitPct}%` }}>
-          <DraftPlanView initialData={planData} />
+          <DraftPlanView
+            initialData={planData}
+            chapterId={planMeta?.chapterId}
+            schoolId={planMeta?.schoolId}
+            canSave={isEducator(user?.role)}
+          />
         </div>
       </div>
 

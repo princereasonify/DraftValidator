@@ -76,6 +76,22 @@ export async function getLearningPlanChapter(chapterId, { schoolId } = {}) {
   return json.data;
 }
 
+export async function saveDraftedPlanVersion({ chapterId, schoolId, draftedPlanJson }) {
+  const body = {
+    chapterId,
+    draftedPlanJson,
+    ...(schoolId != null && String(schoolId) !== '' ? { schoolId: Number(schoolId) } : {}),
+  };
+  const res = await fetch(`${BASE}/drafted-learning-plan/save-version`, {
+    method: 'POST',
+    headers: authHeaders(),
+    body: JSON.stringify(body),
+  });
+  const json = await res.json();
+  if (!res.ok || !json.success) throw new Error(json.message || 'Failed to save drafted plan');
+  return json.data;
+}
+
 export async function getDraftedLearningPlanChapter(chapterId, { schoolId } = {}) {
   const params = new URLSearchParams();
   if (schoolId != null && String(schoolId) !== '') params.set('schoolId', String(schoolId));

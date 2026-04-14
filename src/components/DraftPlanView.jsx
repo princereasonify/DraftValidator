@@ -2,6 +2,7 @@ import { useCallback, useEffect, useReducer, useState } from 'react';
 import rawData from '../data/draftPlan.json';
 import { resequenceAll } from '../utils/resequencing';
 import { validatePlan } from '../utils/validation';
+import { saveDraftedPlanVersion } from '../api';
 import SplitTopicModal from './SplitTopicModal';
 import MergeTopicModal from './MergeTopicModal';
 import ObjectiveModal from './ObjectiveModal';
@@ -879,7 +880,7 @@ function useUndoReducer(initialState) {
 }
 
 /* ── Main DraftPlanView ──────────────────────────────── */
-export default function DraftPlanView({ initialData }) {
+export default function DraftPlanView({ initialData, chapterId, schoolId, canSave = false }) {
   const seed = initialData ? { ...resequenceAll(initialData).newData, _versions: [] } : { ...rawData, _versions: [] };
   const [data, dispatch, { undo, redo, canUndo, canRedo }] = useUndoReducer(seed);
   const [splitModal, setSplitModal] = useState(null);
@@ -894,6 +895,8 @@ export default function DraftPlanView({ initialData }) {
   const [showExamples, setShowExamples] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [comments, setComments] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [saveMsg, setSaveMsg] = useState(null); // { type: 'success' | 'error', text }
 
   // Keyboard shortcuts: Ctrl/Cmd+Z = undo, Ctrl/Cmd+Shift+Z or Ctrl+Y = redo
   useEffect(() => {
@@ -955,6 +958,31 @@ export default function DraftPlanView({ initialData }) {
     a.click();
     URL.revokeObjectURL(url);
   }, [data]);
+
+  const handleSave = useCallback(async () => {
+    if (!chapterId) {
+      setSaveMsg({ type: 'error', text: 'No chapter selected — cannot save.' });
+      return;
+    }
+    setSaving(true);
+    setSaveMsg(null);
+    try {
+      const payload = { ...data };
+      delete payload._versions;
+      const res = await saveDraftedPlanVersion({ chapterId, schoolId, draftedPlanJson: payload });
+      setSaveMsg({ type: 'success', text: `Saved as version ${res?.version ?? 'new'}.` });
+    } catch (err) {
+      setSaveMsg({ type: 'error', text: err?.message || 'Failed to save.' });
+    } finally {
+      setSaving(false);
+    }
+  }, [data, chapterId, schoolId]);
+
+  useEffect(() => {
+    if (!saveMsg) return;
+    const t = setTimeout(() => setSaveMsg(null), 4000);
+    return () => clearTimeout(t);
+  }, [saveMsg]);
 
   const versions = data._versions || [];
   const totalComments = comments.filter(c => !c.resolved).length;
@@ -1068,6 +1096,33 @@ export default function DraftPlanView({ initialData }) {
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export
         </button>
+
+        {canSave && (
+          <button
+            className="dv-toolbar__btn dv-toolbar__btn--pass"
+            onClick={handleSave}
+            disabled={saving || !chapterId}
+            title={chapterId ? 'Save as new version' : 'Open a chapter first'}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            {saving ? 'Saving…' : 'Save'}
+          </button>
+        )}
+
+        {saveMsg && (
+          <span
+            style={{
+              marginLeft: 8,
+              fontSize: '.72rem',
+              padding: '4px 8px',
+              borderRadius: 4,
+              background: saveMsg.type === 'success' ? '#D1FAE5' : '#FEE2E2',
+              color: saveMsg.type === 'success' ? '#065F46' : '#991B1B',
+            }}
+          >
+            {saveMsg.text}
+          </span>
+        )}
       </div>
       </div>{/* /dv-fixed-top */}
 
