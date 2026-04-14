@@ -12,6 +12,40 @@ import ValidationPanel from './ValidationPanel';
 import VersionHistoryPanel from './VersionHistoryPanel';
 import './DraftPlanView.css';
 
+/* ── Inline media preview (image / video / external tool) ── */
+function MediaPreview({ media }) {
+  const src = media?.image_url || media?.url;
+  if (!src) return null;
+  const type = (media?.type || '').toLowerCase();
+
+  if (type === 'image') {
+    return (
+      <a href={src} target="_blank" rel="noopener noreferrer" className="media-item__preview media-item__preview--image">
+        <img
+          src={src}
+          alt={media?.title || 'Media preview'}
+          loading="lazy"
+          onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement.classList.add('media-item__preview--broken'); }}
+        />
+      </a>
+    );
+  }
+
+  if (type === 'video') {
+    return (
+      <video className="media-item__preview media-item__preview--video" src={src} controls preload="metadata" />
+    );
+  }
+
+  // 2d_tool / 3d_tool / simulation and anything else — show as an opener link.
+  return (
+    <a href={src} target="_blank" rel="noopener noreferrer" className="media-item__preview media-item__preview--link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Open {type.replace('_', ' ') || 'resource'}
+    </a>
+  );
+}
+
 /* ── Diff helpers (feedback-resolver view) ──────────── */
 function diffClass(node) {
   const s = node?.__diff?.status;
@@ -31,6 +65,12 @@ function fieldClass(topic, field) {
 /* ── Constants ───────────────────────────────────────── */
 const TOPIC_TYPES_SCIENCE = ['CONCEPT', 'EXPERIMENT', 'PRACTICE', 'INTERACTIVE', 'REVIEW'];
 const TOPIC_TYPES_MATH = ['CONCEPT', 'WORKED_EXAMPLE', 'APPLICATION', 'PRACTICE', 'INTERACTIVE', 'REVIEW'];
+const CONTENT_TYPES = ['image', 'video', '2d_tool', '3d_tool', 'simulation'];
+const CONTENT_TYPE_DEFAULTS = {
+  primary_content_type: 'image',
+  secondary_content_type: 'video',
+  tertiary_content_type: null,
+};
 const BLOOM_COLORS = {
   remember:   { bg: '#FEF3C7', text: '#92400E' },
   understand: { bg: '#E0F2FE', text: '#0C4A6E' },
@@ -576,6 +616,48 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
             </ul>
           </div>
 
+          {/* Content Priority — primary / secondary / tertiary media type ranking */}
+          <div className="topic-section">
+            <div className="topic-section__label-row">
+              <div className="topic-section__label">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 6 9 6 9 12 3 12"/><polyline points="9 18 15 18 15 24 9 24" transform="translate(0 -12)"/><polyline points="15 6 21 6 21 12 15 12"/></svg>
+                Content Priority
+              </div>
+            </div>
+            <div className="content-priority-row">
+              {[
+                { key: 'primary_content_type',   label: '1st' },
+                { key: 'secondary_content_type', label: '2nd' },
+                { key: 'tertiary_content_type',  label: '3rd' },
+              ].map(({ key, label }) => {
+                const raw = topic[key];
+                const value = raw === undefined ? CONTENT_TYPE_DEFAULTS[key] : raw;
+                return (
+                  <div key={key} className="cp-field">
+                    <span className="cp-label">{label}</span>
+                    <select
+                      className="cp-select"
+                      value={value ?? ''}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        dispatch({
+                          type: 'UPDATE_TOPIC',
+                          topicId: topic.topic_id,
+                          patch: { [key]: v === '' ? null : v },
+                        });
+                      }}
+                    >
+                      <option value="">—</option>
+                      {CONTENT_TYPES.map(t => (
+                        <option key={t} value={t}>{t.replace('_', ' ')}</option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Content chunks — side by side */}
           <div className="chunk-columns">
             {/* Modified chunk */}
@@ -649,6 +731,7 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
                       </button>
                     </div>
                   </div>
+                  <MediaPreview media={mi} />
                   <p className="media-item__title">{mi.title}</p>
                   {mi.intent_description && <p className="media-item__desc">{mi.intent_description}</p>}
                   {mi.pedagogical_purpose && <p className="media-item__purpose"><strong>Pedagogical:</strong> {mi.pedagogical_purpose}</p>}
