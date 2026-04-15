@@ -103,7 +103,12 @@ export default function FeedbackResolverPage({ user, onLogout }) {
     let cancelled = false;
     setLoadingChapters(true);
     setChapters([]);
-    getChapters(subjectObj.subjectId, classObj.gradeId)
+    getChapters({
+      schoolId,
+      schoolBoardsLanguagesId: classObj.schoolBoardsLanguagesId,
+      gradeId: classObj.gradeId,
+      subjectId: subjectObj.subjectId,
+    })
       .then(data => { if (!cancelled) setChapters(Array.isArray(data) ? data : []); })
       .catch(err => { if (!cancelled) setError(err.message); })
       .finally(() => { if (!cancelled) setLoadingChapters(false); });

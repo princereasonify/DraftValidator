@@ -54,13 +54,24 @@ export async function getSchoolClassSubjectMap(classId, schoolId) {
   return Array.isArray(json.data?.schoolClassSubjectMaps) ? json.data.schoolClassSubjectMaps : [];
 }
 
-export async function getChapters(subjectId, gradeId) {
-  const res = await fetch(`${BASE}/learning-plan/list?subjectId=${subjectId}&gradeId=${gradeId}`, { headers: authHeaders() });
+export async function getChapters({ schoolId, schoolBoardsLanguagesId, gradeId, subjectId }) {
+  const params = new URLSearchParams();
+  if (schoolId != null && String(schoolId) !== '') params.set('schoolId', String(schoolId));
+  if (schoolBoardsLanguagesId != null && String(schoolBoardsLanguagesId) !== '') params.set('schoolBoardsLanguagesId', String(schoolBoardsLanguagesId));
+  if (gradeId != null && String(gradeId) !== '') params.set('gradeId', String(gradeId));
+  if (subjectId != null && String(subjectId) !== '') params.set('subjectId', String(subjectId));
+  params.set('page', '1');
+  params.set('pageSize', '100');
+  const res = await fetch(`${BASE}/schoolSubjectChapter/byBoardLanguage?${params}`, { headers: authHeaders() });
   const json = await res.json();
   if (!json.success) throw new Error(json.message || 'Failed to load chapters');
-  // Response: { data: { items: [{ id, name, topicNumber }] } }
-  const items = json.data?.items ?? json.data;
-  return Array.isArray(items) ? items : [];
+  const items = json.data?.schoolSubjectChapters ?? [];
+  return items.map(c => ({
+    id: c.chapterId,
+    name: c.chapterName,
+    topicNumber: c.chapterNumber,
+    pdfUrl: c.pdfUrl,
+  }));
 }
 
 export function getTextbookPdfUrl(pdfUrl) {
