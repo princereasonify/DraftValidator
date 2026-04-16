@@ -645,10 +645,10 @@
   cursor: pointer;
 }
 
-/* ── Chunk Columns (side-by-side) ─────────────────── */
+/* ── Chunk Columns (stacked: modified on top, original below) ─────────────────── */
 .chunk-columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 
@@ -671,8 +671,8 @@
 
 .chunk-col__label--modified { color: var(--clr-primary); }
 .chunk-col__label--modified svg { color: var(--clr-primary); }
-.chunk-col__label--original { color: var(--clr-text-muted); }
-.chunk-col__label--original svg { color: var(--clr-text-faint); }
+.chunk-col__label--original { color: var(--clr-primary); }
+.chunk-col__label--original svg { color: var(--clr-primary); }
 
 /* ── Chunk Text ───────────────────────────────────── */
 .chunk-text {
@@ -712,22 +712,30 @@
   background: var(--clr-surface);
   resize: none;
   outline: none;
-  min-height: 160px;
+  min-height: 180px;
   overflow-y: auto;
   transition: border-color var(--dur) var(--ease);
 }
 
 .chunk-textarea:focus { border-color: var(--clr-primary); }
 
-.chunk-textarea--original {
-  color: var(--clr-text-muted);
-  background: #FAFAFA;
-  border-color: var(--clr-border);
-  border-style: dashed;
-  font-style: italic;
-}
+.chunk-textarea--original:focus { border-color: var(--clr-primary); }
 
-.chunk-textarea--original:focus { border-color: var(--clr-border-dark); border-style: solid; }
+/* ── Available Media Types row ─────────────────── */
+.available-media-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0 2px;
+}
+.available-media-row__label {
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--clr-text-muted);
+}
 
 /* ── Toggle Button ────────────────────────────────── */
 .toggle-btn {

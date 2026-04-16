@@ -93,8 +93,70 @@
   cursor: pointer;
 }
 .fr-approve-btn:hover:not(:disabled) { background: #059669; }
-.fr-approve-btn:disabled { background: #94A3B8; cursor: not-allowed; }
+.fr-approve-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.fr-approved-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  border-radius: 8px;
+  color: #065F46;
+}
+.fr-approved-badge svg { flex-shrink: 0; color: #10B981; }
+.fr-approved-badge__title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #065F46;
+}
+.fr-approved-badge__sub {
+  display: block;
+  font-size: 0.72rem;
+  color: #047857;
+  margin-top: 1px;
+}
 .fr-approve-hint { margin: 0; font-size: 0.75rem; color: #64748B; font-style: italic; }
+
+.fr-changes-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #EEF2FF; color: #3730A3;
+  border: 1px solid #C7D2FE; border-radius: 6px;
+  padding: 8px 12px; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.fr-changes-btn:hover:not(:disabled) { background: #E0E7FF; }
+.fr-changes-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.fr-actions-list {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 6px;
+  max-height: 520px; overflow: auto;
+}
+.fr-action {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #E5E7EB; border-radius: 6px;
+  background: #FAFAFA;
+  font-size: 0.85rem; color: #1F2937;
+}
+.fr-action__tag {
+  flex: 0 0 auto;
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  padding: 3px 8px; border-radius: 4px;
+  min-width: 58px; text-align: center;
+}
+.fr-action__tag--split   { background: #FDE68A; color: #78350F; }
+.fr-action__tag--merge   { background: #C7D2FE; color: #3730A3; }
+.fr-action__tag--add     { background: #BBF7D0; color: #14532D; }
+.fr-action__tag--delete  { background: #FECACA; color: #7F1D1D; }
+.fr-action__tag--rename  { background: #E9D5FF; color: #581C87; }
+.fr-action__tag--edit    { background: #E5E7EB; color: #374151; }
+.fr-action__text { flex: 1; line-height: 1.5; }
 
 .fr-msg {
   padding: 6px 10px; border-radius: 6px; font-size: 0.78rem;

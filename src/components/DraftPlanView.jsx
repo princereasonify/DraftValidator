@@ -118,6 +118,62 @@ function nextObjectiveId(topic) { return `${topic.topic_id}.O${maxNum((topic.lea
 function nextMediaId(topic) { return `${topic.topic_id}.MI${maxNum((topic.media_intent || []).map(mi => mi.media_id), /\.MI(\d+)$/) + 1}`; }
 function nextExampleIdFor(state) { return `EX${maxNum((state.example_plan || []).map(e => e.example_id), /^EX(\d+)$/) + 1}`; }
 
+/* ── Renumber topic IDs sequentially (T1..Tn across the whole plan) and cascade
+      the rename to objective_ids, media_ids, linked_objective_id, and
+      example_plan.supported_topic_ids. Segment prefix stays the segment each
+      topic currently lives in. */
+function renumberTopics(state) {
+  const oldToNew = {};
+  let counter = 1;
+  const modulesRenamed = (state.modules || []).map(m => ({
+    ...m,
+    segments: (m.segments || []).map(s => ({
+      ...s,
+      topics: (s.topics || []).map(t => {
+        const newId = `${s.segment_id}.T${counter++}`;
+        if (t.topic_id !== newId) oldToNew[t.topic_id] = newId;
+        return { ...t, topic_id: newId };
+      }),
+    })),
+  }));
+  if (Object.keys(oldToNew).length === 0) return state;
+
+  const renamePrefixed = (id) => {
+    if (!id) return id;
+    for (const [oldId, newId] of Object.entries(oldToNew)) {
+      if (id === oldId) return newId;
+      if (id.startsWith(oldId + '.')) return newId + id.slice(oldId.length);
+    }
+    return id;
+  };
+
+  const modules = modulesRenamed.map(m => ({
+    ...m,
+    segments: (m.segments || []).map(s => ({
+      ...s,
+      topics: (s.topics || []).map(t => ({
+        ...t,
+        learning_objectives: (t.learning_objectives || []).map(o => ({
+          ...o,
+          objective_id: renamePrefixed(o.objective_id),
+        })),
+        media_intent: (t.media_intent || []).map(mi => ({
+          ...mi,
+          media_id: renamePrefixed(mi.media_id),
+          linked_objective_id: renamePrefixed(mi.linked_objective_id),
+        })),
+      })),
+    })),
+  }));
+
+  const example_plan = (state.example_plan || []).map(ex => ({
+    ...ex,
+    supported_topic_ids: [...new Set((ex.supported_topic_ids || []).map(id => oldToNew[id] || id))],
+  }));
+
+  return { ...state, modules, example_plan };
+}
+
 /* ── Reducer ─────────────────────────────────────────── */
 function reducer(state, action) {
   switch (action.type) {
@@ -382,7 +438,9 @@ function reducer(state, action) {
         if ((s.topics || []).some(t => t.topic_id === topicId)) parentSegId = s.segment_id;
       }));
       if (!parentSegId) return state;
-      const newBId = nextTopicId(state, parentSegId);
+      // Split pieces get a unique suffixed ID derived from the source topic
+      // instead of taking the next numeric slot — siblings stay unrenumbered.
+      const newBId = `${topicId}_split_${Date.now()}`;
       const modules = (state.modules || []).map(m => ({ ...m, segments: (m.segments || []).map(s => {
         const idx = (s.topics || []).findIndex(t => t.topic_id === topicId);
         if (idx === -1) return s;
@@ -579,6 +637,54 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
       {/* Body */}
       {expanded && (
         <div className="topic-card__body">
+          {/* Available Media Types */}
+          {(topic.available_media_types || []).length > 0 && (
+            <div className="available-media-row">
+              <span className="available-media-row__label">Available Media Types:</span>
+              {(topic.available_media_types || []).map(t => (
+                <span key={t} className={`media-badge media-badge--${t}`}>{mediaIcon(t)} {t.replace(/_/g, ' ')}</span>
+              ))}
+            </div>
+          )}
+
+          {/* Content chunks — stacked: Original first, then Modified */}
+          <div className="chunk-columns">
+            {/* Original chunk */}
+            <div className={`chunk-col${fieldClass(topic, 'original_chunk')}`}>
+              <div className="chunk-col__label chunk-col__label--original">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Original Chunk
+                {topic.__diff?.fields?.original_chunk && <span className="dv-diff-inline-tag">edited</span>}
+              </div>
+              <textarea
+                className="chunk-textarea chunk-textarea--original"
+                value={topic.original_chunk || ''}
+                onChange={e => dispatch({ type: 'UPDATE_TOPIC', topicId: topic.topic_id, patch: { original_chunk: e.target.value } })}
+                placeholder="Original textbook text…"
+              />
+            </div>
+            {/* Modified chunk */}
+            <div className={`chunk-col${fieldClass(topic, 'modified_chunk')}`}>
+              <div className="chunk-col__label chunk-col__label--modified">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Modified Chunk
+                {topic.__diff?.fields?.modified_chunk && <span className="dv-diff-inline-tag">edited</span>}
+              </div>
+              <textarea
+                className="chunk-textarea"
+                value={topic.modified_chunk || ''}
+                onChange={e => dispatch({ type: 'UPDATE_TOPIC', topicId: topic.topic_id, patch: { modified_chunk: e.target.value } })}
+                placeholder="Modified teaching content (HOOK / RECALL / CORE / VISUAL BRIDGE / WORK-THROUGH / ERROR ALERT)…"
+              />
+              {topic.__diff?.fields?.modified_chunk?.old && (
+                <details className="dv-diff-prev">
+                  <summary>Show previous text</summary>
+                  <pre className="dv-diff-prev__text">{topic.__diff.fields.modified_chunk.old}</pre>
+                </details>
+              )}
+            </div>
+          </div>
+
           {/* Objectives */}
           <div className={`topic-section${fieldClass(topic, 'learning_objectives')}`}>
             <div className="topic-section__label-row">
@@ -614,86 +720,6 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* Content Priority — primary / secondary / tertiary media type ranking */}
-          <div className="topic-section">
-            <div className="topic-section__label-row">
-              <div className="topic-section__label">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 6 9 6 9 12 3 12"/><polyline points="9 18 15 18 15 24 9 24" transform="translate(0 -12)"/><polyline points="15 6 21 6 21 12 15 12"/></svg>
-                Content Priority
-              </div>
-            </div>
-            <div className="content-priority-row">
-              {[
-                { key: 'primary_content_type',   label: '1st' },
-                { key: 'secondary_content_type', label: '2nd' },
-                { key: 'tertiary_content_type',  label: '3rd' },
-              ].map(({ key, label }) => {
-                const raw = topic[key];
-                const value = raw === undefined ? CONTENT_TYPE_DEFAULTS[key] : raw;
-                return (
-                  <div key={key} className="cp-field">
-                    <span className="cp-label">{label}</span>
-                    <select
-                      className="cp-select"
-                      value={value ?? ''}
-                      onChange={(e) => {
-                        const v = e.target.value;
-                        dispatch({
-                          type: 'UPDATE_TOPIC',
-                          topicId: topic.topic_id,
-                          patch: { [key]: v === '' ? null : v },
-                        });
-                      }}
-                    >
-                      <option value="">—</option>
-                      {CONTENT_TYPES.map(t => (
-                        <option key={t} value={t}>{t.replace('_', ' ')}</option>
-                      ))}
-                    </select>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Content chunks — side by side */}
-          <div className="chunk-columns">
-            {/* Modified chunk */}
-            <div className={`chunk-col${fieldClass(topic, 'modified_chunk')}`}>
-              <div className="chunk-col__label chunk-col__label--modified">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                Modified Chunk
-                {topic.__diff?.fields?.modified_chunk && <span className="dv-diff-inline-tag">edited</span>}
-              </div>
-              <textarea
-                className="chunk-textarea"
-                value={topic.modified_chunk || ''}
-                onChange={e => dispatch({ type: 'UPDATE_TOPIC', topicId: topic.topic_id, patch: { modified_chunk: e.target.value } })}
-                placeholder="Modified teaching content (HOOK / RECALL / CORE / VISUAL BRIDGE / WORK-THROUGH / ERROR ALERT)…"
-              />
-              {topic.__diff?.fields?.modified_chunk?.old && (
-                <details className="dv-diff-prev">
-                  <summary>Show previous text</summary>
-                  <pre className="dv-diff-prev__text">{topic.__diff.fields.modified_chunk.old}</pre>
-                </details>
-              )}
-            </div>
-            {/* Original chunk */}
-            <div className={`chunk-col${fieldClass(topic, 'original_chunk')}`}>
-              <div className="chunk-col__label chunk-col__label--original">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Original Chunk
-                {topic.__diff?.fields?.original_chunk && <span className="dv-diff-inline-tag">edited</span>}
-              </div>
-              <textarea
-                className="chunk-textarea chunk-textarea--original"
-                value={topic.original_chunk || ''}
-                onChange={e => dispatch({ type: 'UPDATE_TOPIC', topicId: topic.topic_id, patch: { original_chunk: e.target.value } })}
-                placeholder="Original textbook text…"
-              />
-            </div>
           </div>
 
           {/* Media Intent */}
@@ -738,6 +764,48 @@ function TopicCard({ topic, segmentId, topicIndex, totalTopics, dispatch, data, 
                   {mi.linked_objective_id && <p className="media-item__link"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Linked to <code>{mi.linked_objective_id}</code></p>}
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* Content Priority — primary / secondary / tertiary media type ranking */}
+          <div className="topic-section">
+            <div className="topic-section__label-row">
+              <div className="topic-section__label">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="3 6 9 6 9 12 3 12"/><polyline points="9 18 15 18 15 24 9 24" transform="translate(0 -12)"/><polyline points="15 6 21 6 21 12 15 12"/></svg>
+                Content Priority
+              </div>
+            </div>
+            <div className="content-priority-row">
+              {[
+                { key: 'primary_content_type',   label: '1st' },
+                { key: 'secondary_content_type', label: '2nd' },
+                { key: 'tertiary_content_type',  label: '3rd' },
+              ].map(({ key, label }) => {
+                const raw = topic[key];
+                const value = raw === undefined ? CONTENT_TYPE_DEFAULTS[key] : raw;
+                return (
+                  <div key={key} className="cp-field">
+                    <span className="cp-label">{label}</span>
+                    <select
+                      className="cp-select"
+                      value={value ?? ''}
+                      onChange={(e) => {
+                        const v = e.target.value;
+                        dispatch({
+                          type: 'UPDATE_TOPIC',
+                          topicId: topic.topic_id,
+                          patch: { [key]: v === '' ? null : v },
+                        });
+                      }}
+                    >
+                      <option value="">—</option>
+                      {CONTENT_TYPES.map(t => (
+                        <option key={t} value={t}>{t.replace('_', ' ')}</option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

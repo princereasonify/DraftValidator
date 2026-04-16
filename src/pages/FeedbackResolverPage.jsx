@@ -6,9 +6,11 @@ import {
   getChapters,
   getDraftedPlansForChapter,
   approveDraftedPlan,
+  getLearningPlanChapter,
 } from '../api';
 import DraftPlanView from '../components/DraftPlanView';
 import { mergeForDiff } from '../utils/mergeForDiff';
+import '../components/Modal.css';
 import './FeedbackResolverPage.css';
 
 function unique(arr) {
@@ -48,6 +50,7 @@ export default function FeedbackResolverPage({ user, onLogout }) {
   const [approving, setApproving] = useState(false);
   const [error, setError] = useState('');
   const [msg, setMsg] = useState(null); // { type, text }
+  const [baselinePlan, setBaselinePlan] = useState(null); // master plan served when chapter is selected
 
   /* ── Step 1: load schools ── */
   useEffect(() => {
@@ -127,6 +130,20 @@ export default function FeedbackResolverPage({ user, onLogout }) {
       .then(list => { if (!cancelled) setDrafts(Array.isArray(list) ? list : []); })
       .catch(err => { if (!cancelled) setError(err.message); })
       .finally(() => { if (!cancelled) setLoadingDrafts(false); });
+    return () => { cancelled = true; };
+  }, [chapterId, schoolId]);
+
+  /* ── Step 5b: master/baseline plan for this chapter (pre-edit snapshot
+         the teacher started from). This is the ground truth we compare the
+         teacher's latest saved version against in the Changes modal. */
+  useEffect(() => {
+    if (!chapterId) { setBaselinePlan(null); return; }
+    let cancelled = false;
+    setBaselinePlan(null);
+    const opts = schoolId ? { schoolId } : {};
+    getLearningPlanChapter(chapterId, opts)
+      .then(data => { if (!cancelled) setBaselinePlan(data || null); })
+      .catch(() => { if (!cancelled) setBaselinePlan(null); });
     return () => { cancelled = true; };
   }, [chapterId, schoolId]);
 
@@ -219,14 +236,37 @@ export default function FeedbackResolverPage({ user, onLogout }) {
     return typeof raw === 'string' ? JSON.parse(raw) : raw;
   }, [initialPlan]);
 
-  // If there's an initial-version baseline, fold the diff annotations into the
-  // plan tree so DraftPlanView can render inline highlights. Otherwise, show the
-  // plan exactly as-is.
+  // Pick the most informative baseline we have:
+  //   1. master plan fetched from /learning-plan/chapter/{id} (what the teacher started from)
+  //   2. teacher's earliest saved version (fallback when master isn't available)
+  const baselinePlanJson = useMemo(() => {
+    if (baselinePlan) {
+      // Endpoint may return the plan tree directly or wrapped under various keys.
+      if (baselinePlan.modules) return baselinePlan;
+      if (baselinePlan.Plan?.modules) return baselinePlan.Plan;
+      if (baselinePlan.plan?.modules) return baselinePlan.plan;
+      // Try planJson / draftedPlanJson wrappers (PlanBlob shape)
+      for (const key of ['planJson', 'PlanJson', 'draftedPlanJson', 'DraftedPlanJson']) {
+        const raw = baselinePlan[key] ?? baselinePlan.Plan?.[key] ?? baselinePlan.plan?.[key];
+        if (raw) {
+          try {
+            const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+            if (parsed?.modules) return parsed;
+          } catch { /* ignore parse errors */ }
+        }
+      }
+    }
+    return initialPlanJson;
+  }, [baselinePlan, initialPlanJson]);
+
+  // Fold diff annotations into the plan tree so DraftPlanView renders inline
+  // highlights. We compare against the master plan (version 0) when available,
+  // falling back to the teacher's earliest saved version.
   const planToRender = useMemo(() => {
     if (!planJson) return null;
-    if (!initialPlanJson) return planJson;
-    return mergeForDiff(initialPlanJson, planJson);
-  }, [planJson, initialPlanJson]);
+    if (!baselinePlanJson) return planJson;
+    return mergeForDiff(baselinePlanJson, planJson);
+  }, [planJson, baselinePlanJson]);
 
   return (
     <div className="fr-page">
@@ -329,14 +369,24 @@ export default function FeedbackResolverPage({ user, onLogout }) {
                   <div><strong>Approved:</strong> {new Date(selectedPlan.approvedAt).toLocaleString()}</div>
                 )}
               </div>
-              {isLatestSelected ? (
+              {alreadyApproved ? (
+                <div className="fr-approved-badge">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                  <div>
+                    <span className="fr-approved-badge__title">Approved</span>
+                    <span className="fr-approved-badge__sub">
+                      {selectedPlan.approvedAt ? new Date(selectedPlan.approvedAt).toLocaleString() : ''}
+                    </span>
+                  </div>
+                </div>
+              ) : isLatestSelected ? (
                 <button
                   className="fr-approve-btn"
                   onClick={handleApprove}
-                  disabled={approving || alreadyApproved}
-                  title={alreadyApproved ? 'Already approved' : 'Approve this version'}
+                  disabled={approving}
+                  title="Approve this version"
                 >
-                  {approving ? 'Approving…' : alreadyApproved ? 'Approved' : 'Approve final version'}
+                  {approving ? 'Approving…' : 'Approve final version'}
                 </button>
               ) : (
                 <p className="fr-approve-hint">Approval is only available for the latest version.</p>
@@ -358,6 +408,7 @@ export default function FeedbackResolverPage({ user, onLogout }) {
           )}
         </section>
       </div>
+
     </div>
   );
 }

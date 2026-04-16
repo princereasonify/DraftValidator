@@ -1,50 +1,69 @@
-import { useMemo, useState } from 'react';
+import { useRef, useState } from 'react';
 import './Modal.css';
 
 /**
- * Enhanced Split Modal — spec Section 5.2
- * - Shows paragraphs as clickable blocks (split at \n\n boundary)
- * - User clicks between paragraphs to select split point
- * - Name both resulting topics
- * - Assign each objective to A or B (radio per objective, default: all to A)
- * - Assign each media item to A or B (radio per media, default: all to A)
+ * Split Modal
+ * - Shows the full ORIGINAL chunk as selectable text.
+ * - User clicks inside the text to place the caret, then hits "Split here" —
+ *   the split happens at that exact character position (mid-paragraph is fine).
+ * - After a split point is set, user ticks objectives to move to Part B.
+ *   Media follows its linked objective automatically (image + video + tools).
+ * - Modified chunk stays entirely with Part A.
  */
 export default function SplitTopicModal({ topic, onCancel, onConfirm }) {
-  const text = topic.modified_chunk || topic.original_chunk || '';
   const origText = topic.original_chunk || '';
   const objectives = topic.learning_objectives || [];
   const media = topic.media_intent || [];
 
-  // Split text into paragraphs
-  const paragraphs = useMemo(() => text.split(/\n\n+/).map(p => p.trim()).filter(Boolean), [text]);
-  const origParas = useMemo(() => origText.split(/\n\n+/).map(p => p.trim()).filter(Boolean), [origText]);
-
-  const [splitIdx, setSplitIdx] = useState(null); // index AFTER which to split (0-based)
+  const textareaRef = useRef(null);
+  const [caret, setCaret] = useState(0);
+  const [splitPos, setSplitPos] = useState(null); // character offset; null = not yet chosen
   const [nameA, setNameA] = useState(topic.topic_name + ' (Part 1)');
   const [nameB, setNameB] = useState(topic.topic_name + ' (Part 2)');
-  const [objAssign, setObjAssign] = useState(() => Object.fromEntries(objectives.map(o => [o.objective_id, 'A'])));
-  const [mediaAssign, setMediaAssign] = useState(() => Object.fromEntries(media.map(m => [m.media_id, 'A'])));
+  const [objIdsForB, setObjIdsForB] = useState(() => new Set());
 
-  const canSplit = splitIdx !== null && splitIdx >= 0 && splitIdx < paragraphs.length - 1;
+  const updateCaret = () => {
+    const el = textareaRef.current;
+    if (el) setCaret(el.selectionStart ?? 0);
+  };
 
-  const partA = splitIdx !== null ? paragraphs.slice(0, splitIdx + 1).join('\n\n') : '';
-  const partB = splitIdx !== null ? paragraphs.slice(splitIdx + 1).join('\n\n') : '';
-  const origPartA = splitIdx !== null ? origParas.slice(0, Math.ceil((splitIdx + 1) / paragraphs.length * origParas.length)).join('\n\n') : '';
-  const origPartB = splitIdx !== null ? origParas.slice(Math.ceil((splitIdx + 1) / paragraphs.length * origParas.length)).join('\n\n') : '';
+  const confirmSplitHere = () => {
+    if (caret <= 0 || caret >= origText.length) return;
+    setSplitPos(caret);
+  };
+
+  const clearSplit = () => setSplitPos(null);
+
+  const canSplit = splitPos !== null && splitPos > 0 && splitPos < origText.length;
+  const originalA = canSplit ? origText.slice(0, splitPos).trimEnd() : origText;
+  const originalB = canSplit ? origText.slice(splitPos).trimStart() : '';
+
+  const toggleObjForB = (objId) => {
+    setObjIdsForB(prev => {
+      const next = new Set(prev);
+      if (next.has(objId)) next.delete(objId); else next.add(objId);
+      return next;
+    });
+  };
+
+  const objectivesA = objectives.filter(o => !objIdsForB.has(o.objective_id));
+  const objectivesB = objectives.filter(o => objIdsForB.has(o.objective_id));
+  const mediaA = media.filter(m => !m.linked_objective_id || !objIdsForB.has(m.linked_objective_id));
+  const mediaB = media.filter(m => m.linked_objective_id && objIdsForB.has(m.linked_objective_id));
 
   const handleConfirm = () => {
     if (!canSplit) return;
     onConfirm({
       nameA: nameA.trim() || topic.topic_name + ' (Part 1)',
       nameB: nameB.trim() || topic.topic_name + ' (Part 2)',
-      modifiedA: partA,
-      modifiedB: partB,
-      originalA: origPartA,
-      originalB: origPartB,
-      objectivesA: objectives.filter(o => objAssign[o.objective_id] !== 'B'),
-      objectivesB: objectives.filter(o => objAssign[o.objective_id] === 'B'),
-      mediaA: media.filter(m => mediaAssign[m.media_id] !== 'B'),
-      mediaB: media.filter(m => mediaAssign[m.media_id] === 'B'),
+      modifiedA: topic.modified_chunk || '',
+      modifiedB: '',
+      originalA,
+      originalB,
+      objectivesA,
+      objectivesB,
+      mediaA,
+      mediaB,
     });
   };
 
@@ -69,110 +88,119 @@ export default function SplitTopicModal({ topic, onCancel, onConfirm }) {
         <div className="modal__body">
           <p className="modal__hint">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            Click <strong>between paragraphs</strong> to choose the split point. Topic A gets paragraphs above; Topic B gets paragraphs below.
+            Click anywhere inside the <strong>original chunk</strong> below to place the cursor, then hit <strong>Split here</strong>. You can split mid-paragraph. Modified chunk stays with Part A.
           </p>
 
-          {/* Paragraph selector */}
-          <div className="split-paragraphs">
-            {paragraphs.map((para, i) => (
-              <div key={i}>
-                <div className={`split-para${splitIdx !== null && i <= splitIdx ? ' split-para--a' : splitIdx !== null ? ' split-para--b' : ''}`}>
-                  {splitIdx !== null && (
-                    <span className={`split-para__badge split-para__badge--${i <= splitIdx ? 'a' : 'b'}`}>
-                      {i <= splitIdx ? 'A' : 'B'}
-                    </span>
-                  )}
-                  <p>{para.length > 180 ? para.slice(0, 180) + '…' : para}</p>
-                </div>
-                {i < paragraphs.length - 1 && (
-                  <button
-                    type="button"
-                    className={`split-divider-btn${splitIdx === i ? ' split-divider-btn--active' : ''}`}
-                    onClick={() => setSplitIdx(prev => prev === i ? null : i)}
-                    title={`Split after paragraph ${i + 1}`}
-                  >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    {splitIdx === i ? 'Split point selected ✓' : `Click to split here`}
-                  </button>
-                )}
-              </div>
-            ))}
-            {paragraphs.length === 0 && <p className="form-empty">No content to split.</p>}
+          {/* Free-text split area */}
+          <div className="form-group">
+            <label className="form-label">
+              Original chunk
+              <span className="form-label__hint"> · cursor at position {caret} of {origText.length}</span>
+            </label>
+            <textarea
+              ref={textareaRef}
+              className="chunk-textarea"
+              style={{ minHeight: 260 }}
+              value={origText}
+              readOnly
+              onClick={updateCaret}
+              onKeyUp={updateCaret}
+              onSelect={updateCaret}
+            />
+            <div style={{ display: 'flex', gap: 8, marginTop: 8, alignItems: 'center' }}>
+              <button
+                type="button"
+                className="btn btn--primary"
+                onClick={confirmSplitHere}
+                disabled={caret <= 0 || caret >= origText.length}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Split here
+              </button>
+              {splitPos !== null && (
+                <button type="button" className="btn btn--ghost" onClick={clearSplit}>
+                  Clear split point
+                </button>
+              )}
+              {splitPos !== null && (
+                <span className="merge-option__location">Split at character {splitPos}</span>
+              )}
+            </div>
           </div>
 
           {canSplit && (
             <>
-              {/* Names for both parts */}
+              {/* Preview of both parts */}
               <div className="form-row">
                 <div className="form-group form-group--flex">
-                  <label className="form-label"><span className="split-label-a">A</span> Topic A Name</label>
+                  <label className="form-label"><span className="split-label-a">A</span> Part 1 preview</label>
+                  <div className="split-para split-para--a" style={{ whiteSpace: 'pre-wrap', maxHeight: 160, overflow: 'auto' }}>
+                    <p>{originalA || <em>(empty)</em>}</p>
+                  </div>
+                </div>
+                <div className="form-group form-group--flex">
+                  <label className="form-label"><span className="split-label-b">B</span> Part 2 preview</label>
+                  <div className="split-para split-para--b" style={{ whiteSpace: 'pre-wrap', maxHeight: 160, overflow: 'auto' }}>
+                    <p>{originalB || <em>(empty)</em>}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Part names */}
+              <div className="form-row">
+                <div className="form-group form-group--flex">
+                  <label className="form-label"><span className="split-label-a">A</span> Part 1 name</label>
                   <input type="text" className="form-input" value={nameA} onChange={e => setNameA(e.target.value)} />
                 </div>
                 <div className="form-group form-group--flex">
-                  <label className="form-label"><span className="split-label-b">B</span> Topic B Name</label>
+                  <label className="form-label"><span className="split-label-b">B</span> Part 2 name</label>
                   <input type="text" className="form-input" value={nameB} onChange={e => setNameB(e.target.value)} />
                 </div>
               </div>
 
-              {/* Objective assignment */}
+              {/* Objectives — checkbox = move to Part B; linked media follows */}
               {objectives.length > 0 && (
                 <div className="form-group">
-                  <label className="form-label">Assign Learning Objectives</label>
+                  <label className="form-label">
+                    Move learning objectives to Part B
+                    <span className="form-label__hint"> (unchecked stay with Part A; media follows its linked objective)</span>
+                  </label>
                   <div className="assign-list">
-                    {objectives.map(obj => (
-                      <div key={obj.objective_id} className="assign-row">
-                        <div className="assign-row__text">
-                          <code>{obj.objective_id}</code>
-                          <span>[{obj.bloom_level}]</span>
-                          <p>{obj.objective_text}</p>
-                        </div>
-                        <div className="assign-row__btns">
-                          <button
-                            type="button"
-                            className={`assign-btn assign-btn--a${objAssign[obj.objective_id] !== 'B' ? ' assign-btn--active' : ''}`}
-                            onClick={() => setObjAssign(p => ({ ...p, [obj.objective_id]: 'A' }))}
-                          >A</button>
-                          <button
-                            type="button"
-                            className={`assign-btn assign-btn--b${objAssign[obj.objective_id] === 'B' ? ' assign-btn--active' : ''}`}
-                            onClick={() => setObjAssign(p => ({ ...p, [obj.objective_id]: 'B' }))}
-                          >B</button>
-                        </div>
-                      </div>
-                    ))}
+                    {objectives.map(obj => {
+                      const linkedMedia = media.filter(m => m.linked_objective_id === obj.objective_id);
+                      const isInB = objIdsForB.has(obj.objective_id);
+                      return (
+                        <label key={obj.objective_id} className={`assign-check-row${isInB ? ' assign-check-row--checked' : ''}`}>
+                          <input type="checkbox" checked={isInB} onChange={() => toggleObjForB(obj.objective_id)} />
+                          <span className={`assign-src assign-src--${isInB ? 'b' : 'a'}`}>{isInB ? 'B' : 'A'}</span>
+                          <span className="obj-bloom-small">[{obj.bloom_level}]</span>
+                          <span style={{ flex: 1 }}>{obj.objective_text}</span>
+                          {linkedMedia.length > 0 && (
+                            <span className="merge-option__location" style={{ marginLeft: 8 }}>
+                              + {linkedMedia.length} media
+                            </span>
+                          )}
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
               )}
 
-              {/* Media assignment */}
-              {media.length > 0 && (
-                <div className="form-group">
-                  <label className="form-label">Assign Media Items</label>
-                  <div className="assign-list">
-                    {media.map(mi => (
-                      <div key={mi.media_id} className="assign-row">
-                        <div className="assign-row__text">
-                          <code>{mi.media_id}</code>
-                          <span className={`media-badge media-badge--${mi.type}`}>{mi.type?.replace('_', ' ')}</span>
-                          <p>{mi.title}</p>
-                        </div>
-                        <div className="assign-row__btns">
-                          <button
-                            type="button"
-                            className={`assign-btn assign-btn--a${mediaAssign[mi.media_id] !== 'B' ? ' assign-btn--active' : ''}`}
-                            onClick={() => setMediaAssign(p => ({ ...p, [mi.media_id]: 'A' }))}
-                          >A</button>
-                          <button
-                            type="button"
-                            className={`assign-btn assign-btn--b${mediaAssign[mi.media_id] === 'B' ? ' assign-btn--active' : ''}`}
-                            onClick={() => setMediaAssign(p => ({ ...p, [mi.media_id]: 'B' }))}
-                          >B</button>
-                        </div>
-                      </div>
-                    ))}
+              {/* Summary */}
+              <div className="form-group">
+                <label className="form-label">Summary</label>
+                <div className="assign-list" style={{ background: 'transparent', border: 'none', padding: 0 }}>
+                  <div className="assign-check-row" style={{ cursor: 'default' }}>
+                    <span className="assign-src assign-src--a">A</span>
+                    <span>{objectivesA.length} objectives, {mediaA.length} media, modified chunk kept</span>
+                  </div>
+                  <div className="assign-check-row" style={{ cursor: 'default' }}>
+                    <span className="assign-src assign-src--b">B</span>
+                    <span>{objectivesB.length} objectives, {mediaB.length} media, new topic</span>
                   </div>
                 </div>
-              )}
+              </div>
             </>
           )}
         </div>

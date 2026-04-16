@@ -30,6 +30,7 @@ export default function App() {
   const [planMeta, setPlanMeta] = useState(null);   // { subject, grade, chapter, board, medium }
   const [planData, setPlanData] = useState(null);
   const [planVersion, setPlanVersion] = useState(null);
+  const [planApproved, setPlanApproved] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
 
   /* Restore session on mount */
@@ -86,19 +87,22 @@ export default function App() {
           const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
           setPlanData(parsed);
           setPlanVersion(drafted.plan.version ?? null);
+          setPlanApproved(drafted.plan.isDraft === false);
           setView('main');
           return;
         }
 
-        // Fallback to learning plan
+        // Fallback to learning plan (master / version 0)
         const lp = await getLearningPlanChapter(meta.chapterId, opts);
         if (lp?.plan?.planJson) {
           const parsed = typeof lp.plan.planJson === 'string' ? JSON.parse(lp.plan.planJson) : lp.plan.planJson;
           setPlanData(parsed);
           setPlanVersion(lp.plan.version ?? null);
+          setPlanApproved(false);
         } else {
           setPlanData(null);
           setPlanVersion(null);
+          setPlanApproved(false);
         }
       } catch {
         setPlanData(null);
@@ -120,6 +124,7 @@ export default function App() {
     setUser(null);
     setPlanData(null);
     setPlanVersion(null);
+    setPlanApproved(false);
     setPlanMeta(null);
     setView('login');
   }, []);
@@ -209,8 +214,10 @@ export default function App() {
               Change
             </button>
           )}
-          <span className="app-header__badge app-header__badge--draft">
-            {planVersion != null ? `Draft v${planVersion}` : 'Draft'}
+          <span className={`app-header__badge ${planApproved ? 'app-header__badge--approved' : 'app-header__badge--draft'}`}>
+            {planApproved
+              ? (planVersion != null ? `Approved v${planVersion}` : 'Approved')
+              : (planVersion != null ? `Draft v${planVersion}` : 'Draft')}
           </span>
           <span className="app-header__badge app-header__badge--stage">Review Stage</span>
           <button className="app-header__back-btn" onClick={() => setShowHelp(true)} title="User manual">
@@ -271,7 +278,7 @@ export default function App() {
             initialData={planData}
             chapterId={planMeta?.chapterId}
             schoolId={planMeta?.schoolId}
-            canSave={isEducator(user?.role)}
+            canSave={isEducator(user?.role) && !planApproved}
             onSaved={handleSaved}
           />
         </div>
