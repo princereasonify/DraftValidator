@@ -211,6 +211,10 @@ export default function App() {
     <div className="app">
       {/* ── Header ───────────────── */}
       <header className="app-header">
+        <button className="app-header__back-btn app-header__back-btn--left" onClick={handleBackToSelection} title="Back to selection">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+          Back
+        </button>
         <div className="app-header__brand">
           <span className="app-header__logo">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -226,12 +230,6 @@ export default function App() {
           <span className="app-header__sub">{subjectLabel} · Grade {gradeLabel} · {chapterLabel}</span>
         </div>
         <div className="app-header__actions">
-          {planMeta && (
-            <button className="app-header__back-btn" onClick={handleBackToSelection} title="Back to selection">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>
-              Change
-            </button>
-          )}
           <span className={`app-header__badge ${planApproved ? 'app-header__badge--approved' : 'app-header__badge--draft'}`}>
             {planApproved
               ? (planVersion != null ? `Approved v${planVersion}` : 'Approved')

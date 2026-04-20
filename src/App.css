@@ -102,6 +102,15 @@
 }
 .app-header__back-btn:hover { background: rgba(255,255,255,.14); color: #fff; }
 .app-header__back-btn--logout { padding: 4px 8px; }
+.app-header__back-btn--left {
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid rgba(255,255,255,.12);
+  padding: 0 16px;
+  height: 100%;
+  background: rgba(255,255,255,.06);
+  flex-shrink: 0;
+}
 
 /* ── Panel Labels ─────────────────────────────────── */
 .app-panel-labels {
