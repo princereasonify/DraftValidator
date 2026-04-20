@@ -196,3 +196,100 @@
 .app-resizer--active .app-resizer__dots span {
   background: rgba(255,255,255,.9);
 }
+
+/* ── Responsive ───────────────────────────────────── */
+
+/* Tablet: compact header subtitle */
+@media (max-width: 1023px) {
+  .app-header__sub {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Mobile: single-panel tab layout */
+@media (max-width: 767px) {
+  .app-header {
+    padding: 0 12px;
+    height: 48px;
+  }
+
+  .app-header__divider,
+  .app-header__sub,
+  .app-header__badge--stage {
+    display: none;
+  }
+
+  .app-header__badge {
+    font-size: .65rem;
+    padding: 2px 8px;
+  }
+
+  .app-header__actions {
+    gap: 6px;
+  }
+
+  /* Panel labels become full-width tabs */
+  .app-panel-labels {
+    height: 38px;
+  }
+
+  .app-panel-label {
+    flex: 1 !important;
+    width: auto !important;
+    justify-content: center;
+    cursor: pointer;
+    border-right: none;
+    border-bottom: 2px solid transparent;
+    transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  }
+
+  .app-panel-label--active {
+    background: var(--clr-primary-bg, #EDE9FE);
+    color: var(--clr-primary);
+    border-bottom-color: var(--clr-primary);
+  }
+
+  .app-panel-label--active svg {
+    opacity: 1;
+  }
+
+  /* Main stacks panels, resizer hidden */
+  .app-main {
+    height: calc(100dvh - 48px - 38px);
+  }
+
+  .app-resizer {
+    display: none;
+  }
+
+  /* Active panel takes full width, inactive hidden */
+  .app-panel {
+    width: 100% !important;
+    flex-shrink: 0;
+  }
+
+  .app-panel--mobile-hidden {
+    display: none;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  .app-panel-label {
+    font-size: .65rem;
+    gap: 4px;
+    padding: 0 8px;
+  }
+
+  .app-header__title {
+    font-size: .85rem;
+  }
+
+  .app-header__back-btn {
+    padding: 4px 7px;
+    font-size: .7rem;
+  }
+}

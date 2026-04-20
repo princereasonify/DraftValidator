@@ -89,16 +89,23 @@
 .dv-toolbar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   padding: 8px 12px;
   background: var(--clr-surface-2);
   border-bottom: 1px solid var(--clr-border);
   flex-shrink: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+
+.dv-toolbar::-webkit-scrollbar { display: none; }
 
 .dv-search {
   position: relative;
-  flex: 1;
+  flex: 0 1 280px;
+  min-width: 100px;
   display: flex;
   align-items: center;
 }
@@ -149,7 +156,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 12px;
+  padding: 5px 10px;
   border: 1.5px solid var(--clr-border);
   border-radius: var(--radius-md);
   background: var(--clr-surface);
@@ -159,6 +166,7 @@
   cursor: pointer;
   transition: all var(--dur) var(--ease);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .dv-toolbar__btn:hover:not(:disabled) { border-color: var(--clr-primary); color: var(--clr-primary); }
@@ -1170,3 +1178,71 @@
   text-transform: capitalize;
 }
 .cp-select:hover { border-color: #94A3B8; }
+
+/* ── DraftPlanView Responsive ─────────────────────── */
+@media (max-width: 767px) {
+  .dv-plan-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .dv-plan-header__stats {
+    gap: 10px;
+  }
+
+  .dv-stat__val { font-size: .85rem; }
+
+  .dv-toolbar {
+    padding: 6px 10px;
+    gap: 5px;
+  }
+
+  .dv-search {
+    flex: 0 1 160px;
+    min-width: 80px;
+  }
+
+  .dv-toolbar__btn {
+    padding: 4px 8px;
+    font-size: .7rem;
+  }
+
+  .dv-content {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .module-header {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .segment-header {
+    padding: 8px 14px;
+  }
+
+  .topic-card {
+    padding: 10px 12px;
+  }
+
+  /* Hide split/merge/move text labels, keep icons */
+  .topic-actions .dv-toolbar__btn span:not(.toolbar-badge) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .dv-plan-header__title {
+    font-size: .8rem;
+  }
+
+  .dv-plan-header__meta {
+    font-size: .67rem;
+  }
+
+  .module-header__title {
+    font-size: .9rem;
+  }
+}
+

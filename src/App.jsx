@@ -137,6 +137,9 @@ export default function App() {
     setView('selection');
   }, []);
 
+  /* ── Mobile panel tab ──────────────────────────────── */
+  const [activePanel, setActivePanel] = useState('plan');
+
   /* ── Split-pane resize ─────────────────────────────── */
   const [splitPct, setSplitPct] = useState(35);
   const [isResizing, setIsResizing] = useState(false);
@@ -144,32 +147,47 @@ export default function App() {
   const startXRef = useRef(null);
   const startPctRef = useRef(null);
 
-  const onResizerDown = useCallback((e) => {
-    e.preventDefault();
+  const startResize = useCallback((clientX) => {
     setIsResizing(true);
-    startXRef.current = e.clientX;
+    startXRef.current = clientX;
     startPctRef.current = splitPct;
   }, [splitPct]);
 
+  const onResizerDown = useCallback((e) => {
+    e.preventDefault();
+    startResize(e.clientX);
+  }, [startResize]);
+
+  const onResizerTouch = useCallback((e) => {
+    e.preventDefault();
+    startResize(e.touches[0].clientX);
+  }, [startResize]);
+
   useEffect(() => {
-    const onMove = (e) => {
+    const onMove = (clientX) => {
       if (!isResizing || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const delta = ((e.clientX - startXRef.current) / rect.width) * 100;
+      const delta = ((clientX - startXRef.current) / rect.width) * 100;
       const next = Math.max(MIN_PCT, Math.min(MAX_PCT, startPctRef.current + delta));
       setSplitPct(next);
     };
+    const onMouseMove = (e) => onMove(e.clientX);
+    const onTouchMove = (e) => onMove(e.touches[0].clientX);
     const onUp = () => setIsResizing(false);
 
     if (isResizing) {
-      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onTouchMove, { passive: false });
+      document.addEventListener('touchend', onUp);
       document.body.style.cursor = 'col-resize';
       document.body.style.userSelect = 'none';
     }
     return () => {
-      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onUp);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', onUp);
       document.body.style.cursor = '';
       document.body.style.userSelect = '';
     };
@@ -230,16 +248,24 @@ export default function App() {
         </div>
       </header>
 
-      {/* ── Panel Labels ─────────── */}
+      {/* ── Panel Labels / Mobile Tabs ─────────── */}
       <div className="app-panel-labels">
-        <div className="app-panel-label" style={{ width: `${splitPct}%` }}>
+        <div
+          className={`app-panel-label${activePanel === 'pdf' ? ' app-panel-label--active' : ''}`}
+          style={{ width: `${splitPct}%` }}
+          onClick={() => setActivePanel('pdf')}
+        >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
           </svg>
           Textbook PDF
         </div>
-        <div className="app-panel-label" style={{ width: `${100 - splitPct}%` }}>
+        <div
+          className={`app-panel-label${activePanel === 'plan' ? ' app-panel-label--active' : ''}`}
+          style={{ width: `${100 - splitPct}%` }}
+          onClick={() => setActivePanel('plan')}
+        >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
@@ -254,7 +280,10 @@ export default function App() {
         className={`app-main${isResizing ? ' app-main--resizing' : ''}`}
       >
         {/* PDF Panel */}
-        <div className="app-panel app-panel--pdf" style={{ width: `${splitPct}%` }}>
+        <div
+          className={`app-panel app-panel--pdf${activePanel !== 'pdf' ? ' app-panel--mobile-hidden' : ''}`}
+          style={{ width: `${splitPct}%` }}
+        >
           <PdfViewer
             src={planMeta?.pdfUrl ? getTextbookPdfUrl(planMeta.pdfUrl) : '/textbook.pdf'}
             authToken={getAuthToken()}
@@ -265,6 +294,7 @@ export default function App() {
         <div
           className={`app-resizer${isResizing ? ' app-resizer--active' : ''}`}
           onMouseDown={onResizerDown}
+          onTouchStart={onResizerTouch}
           title="Drag to resize"
         >
           <div className="app-resizer__dots">
@@ -273,7 +303,10 @@ export default function App() {
         </div>
 
         {/* Draft Plan Panel */}
-        <div className="app-panel app-panel--plan" style={{ width: `${100 - splitPct}%` }}>
+        <div
+          className={`app-panel app-panel--plan${activePanel !== 'plan' ? ' app-panel--mobile-hidden' : ''}`}
+          style={{ width: `${100 - splitPct}%` }}
+        >
           <DraftPlanView
             initialData={planData}
             chapterId={planMeta?.chapterId}
