@@ -14,7 +14,7 @@ const MAX_PCT = 80;
 function isEducator(role) {
   if (!role) return false;
   const r = role.toLowerCase();
-  return r.includes('educator');
+  return r.includes('educator') || r.includes('teacher');
 }
 
 function isFeedbackResolver(role) {

@@ -12,6 +12,22 @@ function authHeaders() {
   }
 }
 
+function getTeacherIdFromToken() {
+  try {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const direct = user.id ?? user.userId ?? user.Id ?? user.UserId ?? user.createdBy ?? null;
+    if (direct != null) return Number(direct);
+    if (user.accessToken) {
+      const payload = JSON.parse(atob(user.accessToken.split('.')[1]));
+      const id = payload.sub ?? payload.nameid ?? payload.userId ?? payload.id ?? payload.Id ?? null;
+      if (id != null) return Number(id);
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export async function apiLogin(email, password) {
   const res = await fetch(`${BASE}/auth/login`, {
     method: 'POST',
@@ -98,18 +114,31 @@ export async function getLearningPlanChapter(chapterId, { schoolId } = {}) {
 }
 
 export async function saveDraftedPlanVersion({ chapterId, schoolId, draftedPlanJson }) {
+  const headers = authHeaders();
+  if (!headers.Authorization) {
+    throw new Error('Session expired. Please log in again before saving.');
+  }
+
+  const teacherId = getTeacherIdFromToken();
+  const chapterIdName = typeof draftedPlanJson?.chapter_id === 'string' && draftedPlanJson.chapter_id.trim()
+    ? draftedPlanJson.chapter_id.trim()
+    : undefined;
   const body = {
     chapterId,
     draftedPlanJson,
+    ...(chapterIdName ? { chapterIdName } : {}),
+    ...(teacherId != null ? { teacherId } : {}),
     ...(schoolId != null && String(schoolId) !== '' ? { schoolId: Number(schoolId) } : {}),
   };
+  console.log('Body:', body);
   const res = await fetch(`${BASE}/drafted-learning-plan/save-version`, {
     method: 'POST',
-    headers: authHeaders(),
+    headers,
+    credentials: 'include',
     body: JSON.stringify(body),
   });
-  const json = await res.json();
-  if (!res.ok || !json.success) throw new Error(json.message || 'Failed to save drafted plan');
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || !json.success) throw new Error(json.message || `Failed to save drafted plan (HTTP ${res.status}).`);
   return json.data;
 }
 
