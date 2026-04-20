@@ -98,7 +98,14 @@ export default function SelectionPage({ user, onOpen, onLogout }) {
       gradeId: classObj.gradeId,
       subjectId: subjectObj.subjectId,
     })
-      .then(data => { if (!cancelled) setChapters(Array.isArray(data) ? data : []); })
+      .then(data => {
+        if (!cancelled) {
+          const sorted = Array.isArray(data)
+            ? [...data].sort((a, b) => (a.topicNumber ?? 0) - (b.topicNumber ?? 0))
+            : [];
+          setChapters(sorted);
+        }
+      })
       .catch(err => { if (!cancelled) setError(err.message || 'Failed to load chapters'); })
       .finally(() => { if (!cancelled) setLoadingChapters(false); });
     return () => { cancelled = true; };
