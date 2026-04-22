@@ -305,13 +305,59 @@ export default function App() {
           className={`app-panel app-panel--plan${activePanel !== 'plan' ? ' app-panel--mobile-hidden' : ''}`}
           style={{ width: `${100 - splitPct}%` }}
         >
-          <DraftPlanView
-            initialData={planData}
-            chapterId={planMeta?.chapterId}
-            schoolId={planMeta?.schoolId}
-            canSave={isEducator(user?.role) && !planApproved}
-            onSaved={handleSaved}
-          />
+          {loadingPlan ? (
+            <div className="plan-empty-wrap">
+              <div className="plan-empty-card plan-empty-card--loading">
+                <div className="plan-empty-icon-wrap">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M12 2v4" />
+                    <path d="M12 18v4" />
+                    <path d="m4.93 4.93 2.83 2.83" />
+                    <path d="m16.24 16.24 2.83 2.83" />
+                    <path d="M2 12h4" />
+                    <path d="M18 12h4" />
+                    <path d="m4.93 19.07 2.83-2.83" />
+                    <path d="m16.24 7.76 2.83-2.83" />
+                  </svg>
+                </div>
+                <h3 className="plan-empty-title">Loading chapter plan</h3>
+                <p className="plan-empty-text">Please wait while we fetch the latest drafted learning plan.</p>
+              </div>
+            </div>
+          ) : !planData ? (
+            <div className="plan-empty-wrap">
+              <div className="plan-empty-card">
+                <div className="plan-empty-icon-wrap">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                    <line x1="8" y1="10" x2="16" y2="10" />
+                  </svg>
+                </div>
+                <h3 className="plan-empty-title">No drafted plan available</h3>
+                <p className="plan-empty-text">
+                  We could not find a drafted plan for
+                  {' '}
+                  <strong>{chapterLabel}</strong>
+                  .
+                  Select another chapter or create/save a draft first.
+                </p>
+                <div className="plan-empty-actions">
+                  <button className="app-header__back-btn" onClick={handleBackToSelection}>
+                    Back to selection
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <DraftPlanView
+              initialData={planData}
+              chapterId={planMeta?.chapterId}
+              schoolId={planMeta?.schoolId}
+              canSave={isEducator(user?.role) && !planApproved}
+              onSaved={handleSaved}
+            />
+          )}
         </div>
       </div>
 
