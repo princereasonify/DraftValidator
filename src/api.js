@@ -28,6 +28,10 @@ function getTeacherIdFromToken() {
   }
 }
 
+export function getCurrentUserId() {
+  return getTeacherIdFromToken();
+}
+
 export async function apiLogin(email, password) {
   const res = await fetch(`${BASE}/auth/login`, {
     method: 'POST',
@@ -163,9 +167,13 @@ export async function approveDraftedPlan(planId) {
   return json.data;
 }
 
-export async function getDraftedLearningPlanChapter(chapterId, { schoolId } = {}) {
+export async function getDraftedLearningPlanChapter(chapterId, { schoolId, teacherId } = {}) {
   const params = new URLSearchParams();
   if (schoolId != null && String(schoolId) !== '') params.set('schoolId', String(schoolId));
+  const effectiveTeacherId = teacherId ?? getTeacherIdFromToken();
+  if (effectiveTeacherId != null && !Number.isNaN(Number(effectiveTeacherId))) {
+    params.set('teacherId', String(Number(effectiveTeacherId)));
+  }
   const q = params.toString() ? `?${params}` : '';
   const res = await fetch(`${BASE}/drafted-learning-plan/chapter/${encodeURIComponent(chapterId)}${q}`, {
     headers: authHeaders(),

@@ -4,7 +4,7 @@ import DraftPlanView from './components/DraftPlanView';
 import LoginPage from './pages/LoginPage';
 import SelectionPage from './pages/SelectionPage';
 import FeedbackResolverPage from './pages/FeedbackResolverPage';
-import { getTextbookPdfUrl, getAuthToken, getLearningPlanChapter, getDraftedLearningPlanChapter, apiLogout } from './api';
+import { getTextbookPdfUrl, getAuthToken, getLearningPlanChapter, getDraftedLearningPlanChapter, apiLogout, getCurrentUserId } from './api';
 import HelpModal from './components/HelpModal';
 import './App.css';
 
@@ -78,7 +78,11 @@ export default function App() {
     if (meta?.chapterId) {
       setLoadingPlan(true);
       try {
-        const opts = meta.schoolId ? { schoolId: meta.schoolId } : {};
+        const currentUserId = getCurrentUserId();
+        const opts = {
+          ...(meta.schoolId ? { schoolId: meta.schoolId } : {}),
+          ...(currentUserId != null ? { teacherId: currentUserId } : {}),
+        };
 
         // Try drafted plan first
         const drafted = await getDraftedLearningPlanChapter(meta.chapterId, opts);
